@@ -25,7 +25,12 @@ public class ServoTest extends OpMode {
 
     @Override
     public void loop() {
-        clawCore.clawMove(gamepad2.right_stick_y);
+        if (gamepad2.dpad_up) {
+            clawCore.clawMove(.001);
+        } else if (gamepad2.dpad_down) {
+            clawCore.clawMove(-.001);
+        }
+        clawCore.update();
 
         telemetry(telemetry);
     }
