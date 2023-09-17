@@ -17,6 +17,13 @@ public class ClawCore {
 
     public void move(double strength) {
         clawGoalPos += strength;
+
+        if (clawGoalPos < claw.MIN_POSITION) {
+            clawGoalPos = claw.MIN_POSITION;
+        }
+        if (clawGoalPos > claw.MAX_POSITION) {
+            clawGoalPos = claw.MAX_POSITION;
+        }
     }
 
     public void update() {
@@ -26,5 +33,6 @@ public class ClawCore {
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCurrent class", "ClawCore.java");
         telemetry.addData("claw position", claw.getPosition());
+        telemetry.addData("clawGoalPos", clawGoalPos);
     }
 }
