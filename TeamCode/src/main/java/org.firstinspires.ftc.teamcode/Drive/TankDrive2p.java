@@ -34,10 +34,13 @@ public class TankDrive2p extends OpMode {
         dualMotorDrive.move(gamepad1.left_stick_y, gamepad1.right_stick_y);
 
         // Update claw
-        if (gamepad2.a && !pgamepad2a) {
-            clawCore.toggle();
+        if (gamepad2.a) {
+            clawCore.open();
         }
-        clawCore.update();
+        if (gamepad2.b) {
+            clawCore.close();
+        }
+        //clawCore.update();
 
         // Telemetry
         telemetry(telemetry);

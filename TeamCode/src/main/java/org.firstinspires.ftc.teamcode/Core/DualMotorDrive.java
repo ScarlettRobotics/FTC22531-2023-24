@@ -16,16 +16,13 @@ public class DualMotorDrive {
         leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
         rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
 
-        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void move(double leftPower, double rightPower) {
         leftMotor.setPower(leftPower);
-        rightMotor.setPower(rightPower);
+        rightMotor.setPower(-rightPower);
     }
 
     public void telemetry(Telemetry telemetry) {

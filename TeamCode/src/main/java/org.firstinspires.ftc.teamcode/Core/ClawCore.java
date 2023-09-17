@@ -26,11 +26,13 @@ public class ClawCore {
     }
 
     public void open() {
+        claw.setPosition(.923);
         clawGoalPos = 0.923;
         clawIsOpen = true;
     }
 
     public void close() {
+        claw.setPosition(.721);
         clawGoalPos = 0.721;
         clawIsOpen = false;
     }
