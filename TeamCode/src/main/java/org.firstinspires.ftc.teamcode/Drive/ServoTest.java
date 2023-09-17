@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Drive;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.*;
 
@@ -26,9 +25,9 @@ public class ServoTest extends OpMode {
     @Override
     public void loop() {
         if (gamepad2.dpad_up) {
-            clawCore.clawMove(.001);
+            clawCore.move(.001);
         } else if (gamepad2.dpad_down) {
-            clawCore.clawMove(-.001);
+            clawCore.move(-.001);
         }
         clawCore.update();
 

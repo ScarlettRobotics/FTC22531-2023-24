@@ -15,7 +15,7 @@ public class ClawCore {
         clawGoalPos = claw.getPosition();
     }
 
-    public void clawMove(double strength) {
+    public void move(double strength) {
         clawGoalPos += strength;
     }
 
