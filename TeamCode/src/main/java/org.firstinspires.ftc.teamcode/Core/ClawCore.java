@@ -8,11 +8,31 @@ public class ClawCore {
     // Initialize claw variables
     private Servo claw;
     private double clawGoalPos;
+    private boolean clawIsOpen;
 
     // Map claw variables to driver hub
     public ClawCore (HardwareMap hardwareMap) {
         claw = hardwareMap.get(Servo.class, "claw");
-        clawGoalPos = claw.getPosition();
+
+        close();
+    }
+
+    public void toggle() {
+        if (clawIsOpen) {
+            close();
+            return;
+        }
+        open();
+    }
+
+    public void open() {
+        clawGoalPos = 0.923;
+        clawIsOpen = true;
+    }
+
+    public void close() {
+        clawGoalPos = 0.721;
+        clawIsOpen = false;
     }
 
     public void move(double strength) {

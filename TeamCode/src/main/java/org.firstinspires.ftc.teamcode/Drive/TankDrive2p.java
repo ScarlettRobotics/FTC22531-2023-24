@@ -12,8 +12,12 @@ import org.firstinspires.ftc.teamcode.Core.*;
  */
 @TeleOp(name = "TankDrive2p", group = "auto")
 public class TankDrive2p extends OpMode {
+    // Class variables
     protected ClawCore clawCore;
     protected DualMotorDrive dualMotorDrive;
+
+    // Gamepad variables
+    protected boolean pgamepad2a;
 
     @Override
     public void init() {
@@ -30,15 +34,15 @@ public class TankDrive2p extends OpMode {
         dualMotorDrive.move(gamepad1.left_stick_y, gamepad1.right_stick_y);
 
         // Update claw
-        if (gamepad2.dpad_up) {
-            clawCore.move(.001);
-        } else if (gamepad2.dpad_down) {
-            clawCore.move(-.001);
+        if (gamepad2.a && !pgamepad2a) {
+            clawCore.toggle();
         }
         clawCore.update();
 
         // Telemetry
         telemetry(telemetry);
+
+        pgamepad2a = gamepad2.a;
     }
 
     public void telemetry(Telemetry telemetry) {
