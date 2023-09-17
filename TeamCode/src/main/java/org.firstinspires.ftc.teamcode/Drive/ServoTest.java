@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.Core.*;
  */
 @TeleOp(name = "ServoTest", group = "auto")
 public class ServoTest extends OpMode {
-    protected Servo claw;
     protected ClawCore clawCore;
 
     @Override
@@ -27,7 +26,7 @@ public class ServoTest extends OpMode {
     @Override
     public void loop() {
         clawCore.clawMove(gamepad2.right_stick_y);
-        
+
         telemetry(telemetry);
     }
 
