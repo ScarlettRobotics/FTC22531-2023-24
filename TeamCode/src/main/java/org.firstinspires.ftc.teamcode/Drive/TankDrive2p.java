@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.Core.*;
  * ServoTest
  * Designed to find the best servo locations for opening and closing the claw.
  */
-@TeleOp(name = "ServoTest", group = "auto")
-public class ServoTest extends OpMode {
+@TeleOp(name = "TankDrive2p", group = "auto")
+public class TankDrive2p extends OpMode {
     protected ClawCore clawCore;
     protected DualMotorDrive dualMotorDrive;
 
