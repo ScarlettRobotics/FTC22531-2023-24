@@ -31,7 +31,11 @@ public class TankDrive2p extends OpMode {
     @Override
     public void loop() {
         // Update drive system
-        dualMotorDrive.move(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        // Protect against stick drift: in this case dead zone is 5%
+        if (!(gamepad1.left_stick_y < .05)) {
+            dualMotorDrive.move(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        }
+
 
         // Update claw
         if (gamepad2.a) {
