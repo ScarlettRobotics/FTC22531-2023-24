@@ -6,6 +6,7 @@ public abstract class SystemsManager extends OpMode {
     // Initialize claw and slide classes
     protected DrivetrainCore drive;
     protected ClawCore claw;
+    protected SlideCore slide;
 
     @Override
     public void init() {
@@ -19,7 +20,8 @@ public abstract class SystemsManager extends OpMode {
 
     /* Moves the slide based on gamepad presses */
     protected void updateSlide(final int controllerNum) {
-
+        // Set slide power based on controller input
+        slide.slideMotor.setPower(gamepad1.right_stick_x);
     }
 
     /* Updates claw state based on gamepad presses. */
