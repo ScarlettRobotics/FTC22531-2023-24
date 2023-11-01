@@ -15,8 +15,6 @@ public class TankDrive2p extends SystemsManager {
         telemetry(telemetry);
         // update drivetrain
         updateMotorTank(1);
-        // update the slide
-        updateSlide(2);
     }
 
     public void telemetry(Telemetry telemetry) {

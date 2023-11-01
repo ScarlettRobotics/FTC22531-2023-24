@@ -16,20 +16,7 @@ public abstract class SystemsManager extends OpMode {
         telemetry.addData("FTC Team #", "22531");
     }
 
-
-    /* Moves the slide based on gamepad input */
-    protected void updateSlide(final int controllerNum) {
-        // Set slide power based on controller input
-        switch (controllerNum) {
-            case 1:
-                // one player mode
-            case 2:
-                // two player mode
-                slide.slideMotor.setPower(gamepad2.right_stick_x);
-        }
-    }
-
-
+    
     /* Updates drivetrain state based on joystick movement. Uses tank drive controls. */
     protected void updateMotorTank(final int controllerNum) {
         double left, right;
