@@ -6,10 +6,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.*;
 
 
-/**
- * ServoTest
- * Designed to find the best servo locations for opening and closing the claw.
- */
 @TeleOp(name = "TankDrive2p", group = "auto")
 public class TankDrive2p extends OpMode {
     // Class variables
