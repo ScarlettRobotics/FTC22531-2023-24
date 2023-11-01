@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public abstract class SystemsManager extends OpMode {
     // Initialize claw and slide classes
     protected DrivetrainCore drive;
-    protected ClawCore claw;
     protected SlideCore slide;
 
     @Override
@@ -24,29 +23,6 @@ public abstract class SystemsManager extends OpMode {
         slide.slideMotor.setPower(gamepad1.right_stick_x);
     }
 
-    /* Updates claw state based on gamepad presses. */
-    protected void updateClaw(final int controllerNum) {
-        // controllerNum determines the gamepad that controls the robot
-        switch (controllerNum) {
-            case 1:
-                // Open/close claw if A/B is pressed (respectively)
-                if (gamepad1.a) {
-                    claw.open();
-                } else if (gamepad1.b) {
-                    claw.close();
-                }
-                break;
-            case 2:
-                // Open/close claw if A/B is pressed (respectively)
-                if (gamepad2.a) {
-                    claw.open();
-                } else if (gamepad2.b) {
-                    claw.close();
-                }
-                break;
-        }
-        claw.telemetry(telemetry);
-    }
 
     /* Updates drivetrain state based on joystick movement. Uses tank drive controls. */
     protected void updateMotorTank(final int controllerNum) {
