@@ -13,16 +13,14 @@ import org.firstinspires.ftc.teamcode.Core.*;
 @TeleOp(name = "TankDrive2p", group = "auto")
 public class TankDrive2p extends OpMode {
     // Class variables
-    protected ClawCore clawCore;
-    protected DualMotorDrive dualMotorDrive;
+    protected DrivetrainCore drivetraincore;
 
     // Gamepad variables
     protected boolean pgamepad2a;
 
     @Override
     public void init() {
-        clawCore = new ClawCore(hardwareMap);
-        dualMotorDrive = new DualMotorDrive(hardwareMap);
+        drivetraincore = new DrivetrainCore(hardwareMap);
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
@@ -33,18 +31,8 @@ public class TankDrive2p extends OpMode {
         // Update drive system
         // Protect against stick drift: in this case dead zone is 5%
         if (!(gamepad1.left_stick_y < .05)) {
-            dualMotorDrive.move(gamepad1.left_stick_y, gamepad1.right_stick_y);
+            drivetraincore.setMoveVelocity(gamepad1.left_stick_y, gamepad1.right_stick_y);
         }
-
-
-        // Update claw
-        if (gamepad2.a) {
-            clawCore.open();
-        }
-        if (gamepad2.b) {
-            clawCore.close();
-        }
-        //clawCore.update();
 
         // Telemetry
         telemetry(telemetry);
@@ -53,7 +41,6 @@ public class TankDrive2p extends OpMode {
     }
 
     public void telemetry(Telemetry telemetry) {
-        clawCore.telemetry(telemetry);
-        dualMotorDrive.telemetry(telemetry);
+        drivetraincore.telemetry(telemetry);
     }
 }
