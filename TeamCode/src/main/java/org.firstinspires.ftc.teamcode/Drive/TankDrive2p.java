@@ -8,25 +8,18 @@ import org.firstinspires.ftc.teamcode.Core.*;
 
 @TeleOp(name = "TankDrive2p", group = "auto")
 public class TankDrive2p extends SystemsManager {
-    // Class variables
-    protected DrivetrainCore drivetraincore;
-
-    // Gamepad variables
-    protected boolean pgamepad2a;
 
     @Override
     public void loop() {
-        // Update drive system
-        // Protect against stick drift: in this case dead zone is 5%
-
-
         // Telemetry
         telemetry(telemetry);
-
-        pgamepad2a = gamepad2.a;
+        // update drivetrain
+        updateMotorTank(1);
+        // update the slide
+        updateSlide(2);
     }
 
     public void telemetry(Telemetry telemetry) {
-        drivetraincore.telemetry(telemetry);
+        drive.telemetry(telemetry);
     }
 }

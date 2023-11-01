@@ -17,10 +17,16 @@ public abstract class SystemsManager extends OpMode {
     }
 
 
-    /* Moves the slide based on gamepad presses */
+    /* Moves the slide based on gamepad input */
     protected void updateSlide(final int controllerNum) {
         // Set slide power based on controller input
-        slide.slideMotor.setPower(gamepad2.right_stick_x);
+        switch (controllerNum) {
+            case 1:
+                // one player mode
+            case 2:
+                // two player mode
+                slide.slideMotor.setPower(gamepad2.right_stick_x);
+        }
     }
 
 
