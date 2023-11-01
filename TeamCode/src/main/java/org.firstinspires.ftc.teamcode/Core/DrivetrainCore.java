@@ -15,8 +15,8 @@ public class DrivetrainCore {
     /** Initializes 2 DcMotor Objects for the 2 wheels and sets movement directions */
     public DrivetrainCore(HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
-        leftMotor = hardwareMap.get(DcMotor.class, "left_motor");
-        rightMotor = hardwareMap.get(DcMotor.class, "right_motor");
+        leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
+        rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
