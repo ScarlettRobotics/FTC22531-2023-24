@@ -16,7 +16,7 @@ public abstract class SystemsManager extends OpMode {
         telemetry.addData("FTC Team #", "22531");
     }
 
-    
+
     /* Updates drivetrain state based on joystick movement. Uses tank drive controls. */
     protected void updateMotorTank(final int controllerNum) {
         double left, right;
