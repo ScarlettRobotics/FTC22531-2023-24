@@ -1,15 +1,18 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class SystemsManager extends OpMode {
     // Initialize drivetrain and slide classes
-    protected DrivetrainCore drive;
+    protected DrivetrainCore drivetrainCore;
+    protected ArmCore armCore;
 
     @Override
     public void init() {
         // Define classes
-        drive = new DrivetrainCore(hardwareMap);
+        drivetrainCore = new DrivetrainCore(hardwareMap);
+        armCore = new ArmCore(hardwareMap)
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
@@ -36,8 +39,7 @@ public abstract class SystemsManager extends OpMode {
                 left = 0;
                 right = 0;
         }
-        drive.setMoveVelocity(left, right);
-        drive.telemetry(telemetry);
+        drivetrainCore.setMoveVelocity(left, right);
     }
 
     /* Updates drivetrain state based on joystick movement. Uses arcade drive controls. */
@@ -61,7 +63,11 @@ public abstract class SystemsManager extends OpMode {
                 forward = 0;
                 turn = 0;
         }
-        drive.setMoveVelocity(forward - turn, forward + turn);
-        drive.telemetry(telemetry);
+        drivetrainCore.setMoveVelocity(forward - turn, forward + turn);
+    }
+
+    protected void telemetry(Telemetry telemetry) {
+        drivetrainCore.telemetry(telemetry);
+        armCore.telemetry(telemetry);
     }
 }
