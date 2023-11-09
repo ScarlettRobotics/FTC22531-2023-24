@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public abstract class SystemsManager extends OpMode {
     // Initialize drivetrain and slide classes
     protected DrivetrainCore drive;
-    protected SlideCore slide;
 
     @Override
     public void init() {
