@@ -13,9 +13,7 @@ public class ArcadeDrive2p extends SystemsManager {
         telemetry(telemetry);
         // update drivetrain
         updateMotorArcade(1);
+        updateArm(2);
     }
 
-    public void telemetry(Telemetry telemetry) {
-        drivetrainCore.telemetry(telemetry);
-    }
 }
