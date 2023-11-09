@@ -12,14 +12,14 @@ public abstract class SystemsManager extends OpMode {
     public void init() {
         // Define classes
         drivetrainCore = new DrivetrainCore(hardwareMap);
-        armCore = new ArmCore(hardwareMap)
+        armCore = new ArmCore(hardwareMap);
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
     }
 
 
-    /* Updates drivetrain state based on joystick movement. Uses tank drive controls. */
+    /** Updates drivetrain state based on joystick movement. Uses tank drive controls. */
     protected void updateMotorTank(final int controllerNum) {
         double left, right;
 
@@ -42,7 +42,7 @@ public abstract class SystemsManager extends OpMode {
         drivetrainCore.setMoveVelocity(left, right);
     }
 
-    /* Updates drivetrain state based on joystick movement. Uses arcade drive controls. */
+    /** Updates drivetrain state based on joystick movement. Uses arcade drive controls. */
     protected void updateMotorArcade(final int controllerNum) {
         // turn is positive if intention is to turn right
         double forward, turn;
@@ -64,6 +64,24 @@ public abstract class SystemsManager extends OpMode {
                 turn = 0;
         }
         drivetrainCore.setMoveVelocity(forward - turn, forward + turn);
+    }
+
+    /** Updates arm movement based on left and right trigger. Uses encoder to keep the arm in place. */
+    protected void updateArm(int controllerNum) {
+        double raise;
+
+        switch(controllerNum) {
+            case 1:
+                raise = gamepad1.right_trigger - gamepad1.left_trigger;
+                break;
+            case 2:
+                raise = gamepad2.right_trigger - gamepad2.left_trigger;
+                break;
+            default:
+                raise = 0;
+        }
+        armCore.moveByEncoder((int) raise*10);
+        armCore.update();
     }
 
     protected void telemetry(Telemetry telemetry) {

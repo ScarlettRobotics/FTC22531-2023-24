@@ -5,34 +5,38 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class ArmCore {
-    DcMotor armCore;
+    private DcMotor armMotor;
 
     ArmCore(HardwareMap hardwareMap) {
-        armCore = hardwareMap.get(DcMotor.class, "armMotor");
+        armMotor = hardwareMap.get(DcMotor.class, "armMotor");
 
-        armCore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armCore.setTargetPosition(0);
+        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor.setTargetPosition(0);
 
-        armCore.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    protected int getTargetPosition() {
+        return armMotor.getTargetPosition();
     }
 
     protected void goToEncoder(int encoder) {
-        armCore.setTargetPosition(encoder);
+        armMotor.setTargetPosition(encoder);
     }
 
     protected void moveByEncoder(int encoder) {
-        armCore.setTargetPosition(armCore.getTargetPosition() + encoder);
+        armMotor.setTargetPosition(armMotor.getTargetPosition() + encoder);
     }
 
     protected void update() {
-        armCore.setPower(1);
+        armMotor.setPower(1);
     }
 
     protected void telemetry(Telemetry telemetry) {
         telemetry.addData("CURRENT CLASS", "ArmCore.java");
-        telemetry.addData("runMode", armCore.getMode());
-        telemetry.addData("currentPosition", armCore.getCurrentPosition());
-        telemetry.addData("targetPosition", armCore.getTargetPosition());
-        telemetry.addData("power", armCore.getPower());
+        telemetry.addData("runMode", armMotor.getMode());
+        telemetry.addData("currentPosition", armMotor.getCurrentPosition());
+        telemetry.addData("targetPosition", armMotor.getTargetPosition());
+        telemetry.addData("power", armMotor.getPower());
     }
 }
