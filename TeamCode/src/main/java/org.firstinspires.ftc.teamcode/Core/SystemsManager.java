@@ -67,7 +67,7 @@ public abstract class SystemsManager extends OpMode {
     }
 
     /** Updates arm movement based on left and right trigger. Uses encoder to keep the arm in place. */
-    protected void updateArm(int controllerNum) {
+    protected void updateArm(int controllerNum) { // 356.3 ticks
         double raise;
 
         switch(controllerNum) {
@@ -80,7 +80,7 @@ public abstract class SystemsManager extends OpMode {
             default:
                 raise = 0;
         }
-        armCore.moveByEncoder((int) raise*10);
+        armCore.moveByEncoder((int)raise*1000);
         armCore.update();
     }
 

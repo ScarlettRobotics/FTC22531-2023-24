@@ -9,11 +9,7 @@ public class ArmCore {
 
     ArmCore(HardwareMap hardwareMap) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-
-        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armMotor.setTargetPosition(0);
-
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     protected int getTargetPosition() {
@@ -25,18 +21,21 @@ public class ArmCore {
     }
 
     protected void moveByEncoder(int encoder) {
-        armMotor.setTargetPosition(armMotor.getTargetPosition() + encoder);
+        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor.setTargetPosition(encoder);
+        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     protected void update() {
-        armMotor.setPower(1);
+        armMotor.setPower(0.5);
     }
+
 
     protected void telemetry(Telemetry telemetry) {
         telemetry.addData("CURRENT CLASS", "ArmCore.java");
         telemetry.addData("runMode", armMotor.getMode());
-        telemetry.addData("currentPosition", armMotor.getCurrentPosition());
         telemetry.addData("targetPosition", armMotor.getTargetPosition());
+        telemetry.addData("currentPosition", armMotor.getCurrentPosition());
         telemetry.addData("power", armMotor.getPower());
     }
 }
