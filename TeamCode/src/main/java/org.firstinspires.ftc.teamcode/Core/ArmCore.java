@@ -16,6 +16,10 @@ public class ArmCore {
         return armMotor.getTargetPosition();
     }
 
+    protected int getCurrentPosition() {
+        return armMotor.getCurrentPosition();
+    }
+
     protected void goToEncoder(int encoder) {
         armMotor.setTargetPosition(encoder);
     }
@@ -26,8 +30,31 @@ public class ArmCore {
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+
+    /** Uses a PID controller to set power: https://www.ctrlaltftc.com/the-pid-controller
+     * Updates motor use */
     protected void update() {
-        armMotor.setPower(0.5);
+        int reference = armCore.getTargetPosition();
+        // obtain encoder position
+        int encoderPosition = armCore.getCurrentPosition();
+        // calculate the error
+        int error = reference - encoderPosition;
+
+        // rate of change of the error
+        derivative = (error - lastError) / timer.seconds();
+
+        // sum of all error over time
+        integralSum = integralSum + (error * timer.seconds());
+
+        out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
+
+        armMotor.setPower(out);
+
+        lastError = error;
+
+        // reset the timer for next time
+        timer.reset();
+        armMotor.setPower(1);
     }
 
 
