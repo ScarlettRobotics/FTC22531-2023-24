@@ -23,12 +23,17 @@ public class ArmCore {
     protected void moveByEncoder(int encoder) {
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armMotor.setTargetPosition(encoder);
+        armMotor.setPower(0.5);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    protected void update() {
-        armMotor.setPower(0.5);
+    protected void moveLikeVelocity(double power){
+        armMotor.setPower(power);
+
     }
+    //protected void update() {
+        //armMotor.setPower(0.5);
+    //}
 
 
     protected void telemetry(Telemetry telemetry) {

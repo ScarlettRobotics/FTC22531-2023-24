@@ -67,7 +67,7 @@ public abstract class SystemsManager extends OpMode {
     }
 
     /** Updates arm movement based on left and right trigger. Uses encoder to keep the arm in place. */
-    protected void updateArm(int controllerNum) { // 356.3 ticks
+    protected void updateArm(int controllerNum) {
         double raise;
 
         switch(controllerNum) {
@@ -81,7 +81,23 @@ public abstract class SystemsManager extends OpMode {
                 raise = 0;
         }
         armCore.moveByEncoder((int)raise*1000);
-        armCore.update();
+    }
+
+    protected void updateArmBlind(int controllerNum){
+        double power;
+
+        switch(controllerNum) {
+            case 1:
+                // Move left/right wheels based on left/right stick movement
+                power= gamepad1.right_trigger - gamepad1.left_trigger;
+                break;
+            case 2:
+                // Move left/right wheels based on left/right stick movement
+                power = gamepad2.right_trigger - gamepad1.left_trigger;
+                break;
+            default:
+                power = 0;
+        }
     }
 
     protected void telemetry(Telemetry telemetry) {

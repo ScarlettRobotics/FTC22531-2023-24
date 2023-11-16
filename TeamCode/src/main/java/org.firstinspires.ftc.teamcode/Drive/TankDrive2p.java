@@ -13,7 +13,8 @@ public class TankDrive2p extends SystemsManager {
         telemetry(telemetry);
         // update drivetrain
         updateMotorTank(1);
-        updateArm(2);
+        //updateArm(2);
+        updateArmBlind(2);
     }
 
 }
