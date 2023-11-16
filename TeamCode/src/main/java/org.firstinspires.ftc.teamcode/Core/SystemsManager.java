@@ -1,22 +1,25 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class SystemsManager extends OpMode {
     // Initialize drivetrain and slide classes
-    protected DrivetrainCore drive;
+    protected DrivetrainCore drivetrainCore;
+    protected ArmCore armCore;
 
     @Override
     public void init() {
         // Define classes
-        drive = new DrivetrainCore(hardwareMap);
+        drivetrainCore = new DrivetrainCore(hardwareMap);
+        armCore = new ArmCore(hardwareMap);
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
     }
 
 
-    /* Updates drivetrain state based on joystick movement. Uses tank drive controls. */
+    /** Updates drivetrain state based on joystick movement. Uses tank drive controls. */
     protected void updateMotorTank(final int controllerNum) {
         double left, right;
 
@@ -36,11 +39,10 @@ public abstract class SystemsManager extends OpMode {
                 left = 0;
                 right = 0;
         }
-        drive.setMoveVelocity(left, right);
-        drive.telemetry(telemetry);
+        drivetrainCore.setMoveVelocity(left, right);
     }
 
-    /* Updates drivetrain state based on joystick movement. Uses arcade drive controls. */
+    /** Updates drivetrain state based on joystick movement. Uses arcade drive controls. */
     protected void updateMotorArcade(final int controllerNum) {
         // turn is positive if intention is to turn right
         double forward, turn;
@@ -61,7 +63,47 @@ public abstract class SystemsManager extends OpMode {
                 forward = 0;
                 turn = 0;
         }
-        drive.setMoveVelocity(forward - turn, forward + turn);
-        drive.telemetry(telemetry);
+        drivetrainCore.setMoveVelocity(forward - turn, forward + turn);
+    }
+
+    /** Updates arm movement based on left and right trigger. Uses encoder to keep the arm in place. */
+    protected void updateArm(int controllerNum) {
+        double raise;
+
+        switch(controllerNum) {
+            case 1:
+                raise = gamepad1.right_trigger - gamepad1.left_trigger;
+                break;
+            case 2:
+                raise = gamepad2.right_trigger - gamepad2.left_trigger;
+                break;
+            default:
+                raise = 0;
+        }
+        armCore.moveByEncoder((int)raise*1000);
+    }
+
+    protected void updateArmBlind(int controllerNum){
+        double power;
+
+        switch(controllerNum) {
+            case 1:
+                // Move left/right wheels based on left/right stick movement
+                power= gamepad1.right_trigger - gamepad1.left_trigger;
+                break;
+            case 2:
+                // Move left/right wheels based on left/right stick movement
+                power = gamepad2.right_trigger - gamepad1.left_trigger;
+                break;
+            default:
+                power = 0;
+        }
+
+        armCore.moveLikeVelocity(power);
+    }
+
+    protected void telemetry(Telemetry telemetry) {
+        drivetrainCore.telemetry(telemetry);
+        armCore.telemetry(telemetry);
     }
 }
