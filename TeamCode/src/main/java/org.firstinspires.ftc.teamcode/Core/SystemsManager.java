@@ -98,6 +98,8 @@ public abstract class SystemsManager extends OpMode {
             default:
                 power = 0;
         }
+
+        armCore.moveLikeVelocity(power);
     }
 
     protected void telemetry(Telemetry telemetry) {
