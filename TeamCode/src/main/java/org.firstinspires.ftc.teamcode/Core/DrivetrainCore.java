@@ -40,8 +40,11 @@ public class DrivetrainCore {
      * @param rightVelocity - power sent to the right motor
      */
     public void setMoveVelocity(double leftVelocity, double rightVelocity) {
-        leftMotor.setPower(leftVelocity);
-        rightMotor.setPower(rightVelocity);
+        /* Square the values as per Daniel's request
+        This helps decrease sensitivity
+         */
+        leftMotor.setPower(leftVelocity * leftVelocity);
+        rightMotor.setPower(rightVelocity * rightVelocity);
     }
 
     /** Telemetry in contained in each class for ease of access. */
