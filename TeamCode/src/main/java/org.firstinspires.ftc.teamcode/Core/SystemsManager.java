@@ -1,19 +1,21 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class SystemsManager extends OpMode {
     // Initialize drivetrain and slide classes
     protected DrivetrainCore drivetrainCore;
     protected ArmCore armCore;
-    protected ClawCore claw;
+    protected ClawCore clawCore;
 
     @Override
     public void init() {
         // Define classes
         drivetrainCore = new DrivetrainCore(hardwareMap);
         armCore = new ArmCore(hardwareMap);
+        clawCore = new ClawCore(hardwareMap);
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
@@ -90,21 +92,21 @@ public abstract class SystemsManager extends OpMode {
             case 1:
                 // Open/close claw if A/B is pressed (respectively)
                 if (gamepad1.a) {
-                    claw.open();
+                    clawCore.open();
                 } else if (gamepad1.b) {
-                    claw.close();
+                    clawCore.close();
                 }
                 break;
             case 2:
                 // Open/close claw if A/B is pressed (respectively)
                 if (gamepad2.a) {
-                    claw.open();
+                    clawCore.open();
                 } else if (gamepad2.b) {
-                    claw.close();
+                    clawCore.close();
                 }
                 break;
         }
-        claw.telemetry(telemetry);
+        clawCore.telemetry(telemetry);
     }
 
     protected void updateArmBlind(int controllerNum){
