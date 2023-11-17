@@ -7,12 +7,14 @@ public abstract class SystemsManager extends OpMode {
     // Initialize drivetrain and slide classes
     protected DrivetrainCore drivetrainCore;
     protected ArmCore armCore;
+    protected ClawCore clawCore;
 
     @Override
     public void init() {
         // Define classes
         drivetrainCore = new DrivetrainCore(hardwareMap);
         armCore = new ArmCore(hardwareMap);
+        clawCore = new ClawCore(hardwareMap);
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
@@ -98,6 +100,7 @@ public abstract class SystemsManager extends OpMode {
      * Uses .setPower(). Only use if ArmCore's RUN_TO_POSITION doesn't work.
      * @param controllerNum Determines the driver number that operates the machine system.
      *                      Receives 1 or 2; otherwise does nothing. */
+
     protected void updateArmBlind(int controllerNum){
         double power;
 
@@ -114,7 +117,31 @@ public abstract class SystemsManager extends OpMode {
                 power = 0;
         }
 
-        armCore.setPower(power);
+        armCore.moveLikeVelocity(power);
+    }
+
+    /** Updates the claw's movement.
+     * A/B opens/closes the claw respectively.
+     * Opening will be prioritized over closing the claw if both buttons are pressed.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing. */
+    protected void updateClaw(int controllerNum) {
+        boolean open, close;
+        switch (controllerNum) {
+            case 1:
+                open = gamepad1.a;
+                close = gamepad1.b;
+                break;
+            case 2:
+                open = gamepad2.a;
+                close = gamepad2.b;
+                break;
+            default:
+                open = false;
+                close = false;
+        }
+        if (open) clawCore.open();
+        if (close) clawCore.close();
     }
 
     /** Telemetry */
