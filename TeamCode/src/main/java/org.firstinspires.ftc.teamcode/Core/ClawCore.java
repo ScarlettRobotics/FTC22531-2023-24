@@ -18,12 +18,12 @@ public class ClawCore {
 
     /** Opens the claw to a pre-set value. */
     public void open() {
-        claw.setPosition(0.039);
+        claw.setPosition(0);
     }
 
     /** Closes the claw to a pre-set value. */
     public void close() {
-        claw.setPosition(0.124);
+        claw.setPosition(0.102);
     }
 
     /** Debug method to move claw position by input amount
