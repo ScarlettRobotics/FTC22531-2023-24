@@ -4,39 +4,37 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/** Operates the claw of the robot.
+ * Use Concepts/ClawEncoderFinder to find the position of where the claw should open and close. */
 public class ClawCore {
     /* Initialization */
     /** Initialization is done within ClawCore for ease of access. */
-    protected Servo leftClaw;
-    protected Servo rightClaw;
+    protected Servo claw;
 
     // Maps Servo motor variables to driver hub
     public ClawCore (HardwareMap hardwareMap) {
-        leftClaw = hardwareMap.get(Servo.class, "left_claw");
-        rightClaw = hardwareMap.get(Servo.class, "right_claw");
+        claw = hardwareMap.get(Servo.class, "claw");
     }
 
-    /** Opens the claw to a pre-set width. */
+    /** Opens the claw to a pre-set value. */
     public void open() {
-        rightClaw.setPosition(0.595);
-        leftClaw.setPosition(0.73);
+        claw.setPosition(0.039);
     }
 
-    /** Closes the claw to a pre-set width. */
+    /** Closes the claw to a pre-set value. */
     public void close() {
-        rightClaw.setPosition(0.70);
-        leftClaw.setPosition(0.61);
+        claw.setPosition(0.124);
     }
 
-    /**Create a new function that ClawEncoderFinder is complaining about*/
-    public void moveByPosition(double left, double right){
-        
+    /** Debug method to move claw position by input amount
+     * @param v Amount to move leftClaw by */
+    public void moveByPosition(double v) {
+        claw.setPosition(claw.getPosition() + v);
     }
 
     /** Telemetry in contained in each class for ease of access. */
     public void telemetry(Telemetry telemetry) {
-        telemetry.addData("\nCurrent class:", "ClawCore.java");
-        telemetry.addData("Claw Right angle:", rightClaw.getPosition());
-        telemetry.addData("Claw Left angle:", leftClaw.getPosition());
+        telemetry.addData("\nCurrent class", "ClawCore.java");
+        telemetry.addData("Claw POS:", claw.getPosition());
     }
 }

@@ -15,6 +15,7 @@ public class TankDrive2p extends SystemsManager {
         updateMotorTank(1);
         //updateArm(2);
         updateArmBlind(2);
+        updateClaw(2);
     }
 
 }
