@@ -14,7 +14,6 @@ public class ArcadeDrive2p extends SystemsManager {
         // update drivetrain
         updateMotorArcade(1);
         updateArmBlind(2);
-        updateClaw(2);
     }
 
 }
