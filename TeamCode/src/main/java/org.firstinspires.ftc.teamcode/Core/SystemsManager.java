@@ -69,7 +69,7 @@ public abstract class SystemsManager extends OpMode {
                 forward = 0;
                 turn = 0;
         }
-        drivetrainCore.setMoveVelocity(forward - turn, forward + turn);
+        drivetrainCore.setMoveVelocity(forward + turn, forward - turn);
     }
 
     /** Updates arm movement.
