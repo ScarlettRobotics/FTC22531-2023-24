@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/** Operates the claw of the robot.
+ * Use Concepts/ClawEncoderFinder to find the position of where the claw should open and close. */
 public class ClawCore {
     /* Initialization */
     /** Initialization is done within ClawCore for ease of access. */
@@ -28,7 +30,7 @@ public class ClawCore {
         leftClaw.setPosition(0.61);
     }
 
-    /**Create a new function that ClawEncoderFinder is complaining about*/
+    /** TODO */
     public void moveByPosition(double left, double right){
         
     }

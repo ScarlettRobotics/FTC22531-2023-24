@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public abstract class SystemsManager extends OpMode {
@@ -22,7 +21,10 @@ public abstract class SystemsManager extends OpMode {
     }
 
 
-    /** Updates drivetrain state based on joystick movement. Uses tank drive controls. */
+    /** Updates drivetrain state based on joystick movement. Uses tank drive controls.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing.
+     */
     protected void updateMotorTank(final int controllerNum) {
         double left, right;
 
@@ -45,7 +47,10 @@ public abstract class SystemsManager extends OpMode {
         drivetrainCore.setMoveVelocity(left, right);
     }
 
-    /** Updates drivetrain state based on joystick movement. Uses arcade drive controls. */
+    /** Updates drivetrain state based on joystick movement. Uses arcade drive controls.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing.
+     */
     protected void updateMotorArcade(final int controllerNum) {
         // turn is positive if intention is to turn right
         double forward, turn;
@@ -69,7 +74,11 @@ public abstract class SystemsManager extends OpMode {
         drivetrainCore.setMoveVelocity(forward - turn, forward + turn);
     }
 
-    /** Updates arm movement based on left and right trigger. Uses encoder to keep the arm in place. */
+    /** Updates arm movement.
+     * Right and left trigger moves the arm.
+     * Uses .moveByEncoder(). Only use if ArmCore's RUN_TO_POSITION works.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing. */
     protected void updateArm(int controllerNum) {
         double raise;
 
@@ -86,29 +95,11 @@ public abstract class SystemsManager extends OpMode {
         armCore.moveByEncoder((int)raise*1000);
     }
 
-    protected void updateClaw(int controllerNum){
-        // controllerNum determines the gamepad that controls the robot
-        switch (controllerNum) {
-            case 1:
-                // Open/close claw if A/B is pressed (respectively)
-                if (gamepad1.a) {
-                    clawCore.open();
-                } else if (gamepad1.b) {
-                    clawCore.close();
-                }
-                break;
-            case 2:
-                // Open/close claw if A/B is pressed (respectively)
-                if (gamepad2.a) {
-                    clawCore.open();
-                } else if (gamepad2.b) {
-                    clawCore.close();
-                }
-                break;
-        }
-        clawCore.telemetry(telemetry);
-    }
-
+    /** Updates arm movement.
+     * Right and left trigger moves the arm.
+     * Uses .setPower(). Only use if ArmCore's RUN_TO_POSITION doesn't work.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing. */
     protected void updateArmBlind(int controllerNum){
         double power;
 
@@ -125,11 +116,37 @@ public abstract class SystemsManager extends OpMode {
                 power = 0;
         }
 
-        armCore.moveLikeVelocity(power);
+        armCore.setPower(power);
     }
 
+    /** Updates the claw's movement.
+     * A/B opens/closes the claw respectively.
+     * Opening will be prioritized over closing the claw if both buttons are pressed.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing. */
+    protected void updateClaw(int controllerNum) {
+        boolean open, close;
+        switch (controllerNum) {
+            case 1:
+                open = gamepad1.a;
+                close = gamepad1.b;
+                break;
+            case 2:
+                open = gamepad2.a;
+                close = gamepad2.b;
+                break;
+            default:
+                open = false;
+                close = false;
+        }
+        if (open) clawCore.open();
+        if (close) clawCore.close();
+    }
+
+    /** Telemetry */
     protected void telemetry(Telemetry telemetry) {
         drivetrainCore.telemetry(telemetry);
         armCore.telemetry(telemetry);
+        clawCore.telemetry(telemetry);
     }
 }
