@@ -117,7 +117,7 @@ public abstract class SystemsManager extends OpMode {
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
-                power = gamepad2.right_trigger - gamepad1.left_trigger;
+                power = gamepad2.right_trigger - gamepad2.left_trigger;
                 break;
             default:
                 power = 0;

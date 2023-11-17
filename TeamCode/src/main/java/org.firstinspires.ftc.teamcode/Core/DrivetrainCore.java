@@ -49,8 +49,8 @@ public class DrivetrainCore {
      * @param velocity
      * @return - return the squared velocity
      */
-    private double changePower(double velocity){
-        if (velocity < 0){
+    private double changePower(double velocity) {
+        if (velocity < 0) {
             return (velocity * velocity) * -1;
         }
         return velocity * velocity;
