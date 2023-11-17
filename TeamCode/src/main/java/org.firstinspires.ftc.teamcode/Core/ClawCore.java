@@ -28,6 +28,11 @@ public class ClawCore {
         leftClaw.setPosition(0.61);
     }
 
+    /**Create a new function that ClawEncoderFinder is complaining about*/
+    public void moveByPosition(double left, double right){
+        
+    }
+
     /** Telemetry in contained in each class for ease of access. */
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCurrent class:", "ClawCore.java");

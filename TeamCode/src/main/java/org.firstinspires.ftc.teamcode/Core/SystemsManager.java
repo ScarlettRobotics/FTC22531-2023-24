@@ -7,6 +7,7 @@ public abstract class SystemsManager extends OpMode {
     // Initialize drivetrain and slide classes
     protected DrivetrainCore drivetrainCore;
     protected ArmCore armCore;
+    protected ClawCore claw;
 
     @Override
     public void init() {
@@ -81,6 +82,29 @@ public abstract class SystemsManager extends OpMode {
                 raise = 0;
         }
         armCore.moveByEncoder((int)raise*1000);
+    }
+
+    protected void updateClaw(int controllerNum){
+        // controllerNum determines the gamepad that controls the robot
+        switch (controllerNum) {
+            case 1:
+                // Open/close claw if A/B is pressed (respectively)
+                if (gamepad1.a) {
+                    claw.open();
+                } else if (gamepad1.b) {
+                    claw.close();
+                }
+                break;
+            case 2:
+                // Open/close claw if A/B is pressed (respectively)
+                if (gamepad2.a) {
+                    claw.open();
+                } else if (gamepad2.b) {
+                    claw.close();
+                }
+                break;
+        }
+        claw.telemetry(telemetry);
     }
 
     protected void updateArmBlind(int controllerNum){
