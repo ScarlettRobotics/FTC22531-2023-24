@@ -21,7 +21,10 @@ public abstract class SystemsManager extends OpMode {
     }
 
 
-    /** Updates drivetrain state based on joystick movement. Uses tank drive controls. */
+    /** Updates drivetrain state based on joystick movement. Uses tank drive controls.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing.
+     */
     protected void updateMotorTank(final int controllerNum) {
         double left, right;
 
@@ -44,7 +47,10 @@ public abstract class SystemsManager extends OpMode {
         drivetrainCore.setMoveVelocity(left, right);
     }
 
-    /** Updates drivetrain state based on joystick movement. Uses arcade drive controls. */
+    /** Updates drivetrain state based on joystick movement. Uses arcade drive controls.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing.
+     */
     protected void updateMotorArcade(final int controllerNum) {
         // turn is positive if intention is to turn right
         double forward, turn;
@@ -65,10 +71,14 @@ public abstract class SystemsManager extends OpMode {
                 forward = 0;
                 turn = 0;
         }
-        drivetrainCore.setMoveVelocity(forward - turn, forward + turn);
+        drivetrainCore.setMoveVelocity(forward + turn, forward - turn);
     }
 
-    /** Updates arm movement based on left and right trigger. Uses encoder to keep the arm in place. */
+    /** Updates arm movement.
+     * Right and left trigger moves the arm.
+     * Uses .moveByEncoder(). Only use if ArmCore's RUN_TO_POSITION works.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing. */
     protected void updateArm(int controllerNum) {
         double raise;
 
@@ -84,6 +94,12 @@ public abstract class SystemsManager extends OpMode {
         }
         armCore.moveByEncoder((int)raise*1000);
     }
+
+    /** Updates arm movement.
+     * Right and left trigger moves the arm.
+     * Uses .setPower(). Only use if ArmCore's RUN_TO_POSITION doesn't work.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing. */
 
     protected void updateArmBlind(int controllerNum){
         double power;
@@ -128,6 +144,7 @@ public abstract class SystemsManager extends OpMode {
         if (close) clawCore.close();
     }
 
+    /** Telemetry */
     protected void telemetry(Telemetry telemetry) {
         drivetrainCore.telemetry(telemetry);
         armCore.telemetry(telemetry);
