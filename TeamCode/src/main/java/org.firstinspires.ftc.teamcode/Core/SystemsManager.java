@@ -107,17 +107,16 @@ public abstract class SystemsManager extends OpMode {
         switch(controllerNum) {
             case 1:
                 // Move left/right wheels based on left/right stick movement
-                power= gamepad1.right_trigger - gamepad1.left_trigger;
+                power = gamepad1.left_trigger - gamepad1.right_trigger;
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
-                power = gamepad2.right_trigger - gamepad2.left_trigger;
+                power = gamepad2.left_trigger - gamepad2.right_trigger;
                 break;
             default:
                 power = 0;
         }
-
-        armCore.moveLikeVelocity(power);
+        armCore.setPower(power);
     }
 
     /** Updates the claw's movement.
