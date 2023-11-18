@@ -15,6 +15,8 @@ public abstract class SystemsManager extends OpMode {
         drivetrainCore = new DrivetrainCore(hardwareMap);
         armCore = new ArmCore(hardwareMap);
         clawCore = new ClawCore(hardwareMap);
+        // Make preloading work by closing claw
+        clawCore.close();
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
