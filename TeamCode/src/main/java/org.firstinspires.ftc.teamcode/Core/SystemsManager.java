@@ -116,7 +116,7 @@ public abstract class SystemsManager extends OpMode {
             default:
                 power = 0;
         }
-        armCore.setPower(power);
+        armCore.setPower(power/2);
     }
 
     /** Updates the claw's movement.
