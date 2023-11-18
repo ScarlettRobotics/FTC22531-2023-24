@@ -31,7 +31,7 @@ public class ArmCore {
     protected void moveByEncoder(int encoder) {
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armMotor.setTargetPosition(encoder);
-        armMotor.setPower(0.5);
+        armMotor.setPower(0.25);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
