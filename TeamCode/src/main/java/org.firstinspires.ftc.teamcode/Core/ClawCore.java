@@ -9,32 +9,37 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class ClawCore {
     /* Initialization */
     /** Initialization is done within ClawCore for ease of access. */
-    protected Servo claw;
+    protected Servo leftClaw, rightClaw;
 
     // Maps Servo motor variables to driver hub
     public ClawCore (HardwareMap hardwareMap) {
-        claw = hardwareMap.get(Servo.class, "claw");
+        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
+        rightClaw = hardwareMap.get(Servo.class, "rightClaw");
     }
 
     /** Opens the claw to a pre-set value. */
     public void open() {
-        claw.setPosition(0);
+        leftClaw.setPosition(0.640);
+        rightClaw.setPosition(0.476);
     }
 
     /** Closes the claw to a pre-set value. */
     public void close() {
-        claw.setPosition(0.102);
+        leftClaw.setPosition(0.450);
+        rightClaw.setPosition(0.607);
     }
 
     /** Debug method to move claw position by input amount
-     * @param v Amount to move leftClaw by */
-    public void moveByPosition(double v) {
-        claw.setPosition(claw.getPosition() + v);
+     * @param leftV Amount to move leftClaw by */
+    public void moveByPosition(double leftV, double rightV) {
+        leftClaw.setPosition(leftClaw.getPosition() + leftV);
+        rightClaw.setPosition(rightClaw.getPosition() + rightV);
     }
 
     /** Telemetry in contained in each class for ease of access. */
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCurrent class", "ClawCore.java");
-        telemetry.addData("Claw POS:", claw.getPosition());
+        telemetry.addData("Claw left POS:", leftClaw.getPosition());
+        telemetry.addData("Claw right POS:", rightClaw.getPosition());
     }
 }
