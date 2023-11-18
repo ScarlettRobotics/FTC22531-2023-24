@@ -40,9 +40,6 @@ public class ArmCore {
         armMotor.setPower(power);
 
     }
-    //protected void update() {
-        //armMotor.setPower(0.5);
-    //}
 
     /** Telemetry */
     protected void telemetry(Telemetry telemetry) {
