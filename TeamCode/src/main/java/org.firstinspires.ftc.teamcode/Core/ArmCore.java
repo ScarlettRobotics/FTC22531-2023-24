@@ -31,7 +31,7 @@ public class ArmCore {
     protected void moveByEncoder(int encoder) {
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armMotor.setTargetPosition(encoder);
-        armMotor.setPower(0.5);
+        armMotor.setPower(0.25);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
@@ -40,9 +40,6 @@ public class ArmCore {
         armMotor.setPower(power);
 
     }
-    //protected void update() {
-        //armMotor.setPower(0.5);
-    //}
 
     /** Telemetry */
     protected void telemetry(Telemetry telemetry) {

@@ -50,10 +50,7 @@ public class DrivetrainCore {
      * @return - return the squared velocity
      */
     private double changePower(double velocity) {
-        if (velocity < 0) {
-            return (velocity * velocity) * -1;
-        }
-        return velocity * velocity;
+        return velocity * velocity * velocity;
     }
 
     /** Telemetry in contained in each class for ease of access. */
