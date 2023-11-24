@@ -12,7 +12,7 @@ public class PIDController {
     private DcMotor motor;
     // PID vars
     private final double Kp = 0, Ki = 0, Kd = 0;
-    private final double integralSumMax = 0.25/Ki;
+    private final double integralSumMax = (Ki == 0) ? 0.25 : 0.25/Ki;
     private int goalPosition, currentPosition;
     private int error, pError;
     private double integralSum;
