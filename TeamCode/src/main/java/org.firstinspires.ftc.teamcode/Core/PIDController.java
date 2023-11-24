@@ -3,14 +3,16 @@ package org.firstinspires.ftc.teamcode.Core;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /** PIDController
- * Class used to streamline usage of DcMotor.RunMode.RUN_TO_POSITION.
- * Uses control theory to smoothly move parts to desired location.
+ * Class used when you want to move a DcMotor to a specific encoder value. Uses control theory to achieve this.
  * If you are using this class, ensure the motor always starts in the same position for consistency.
- * See https://www.ctrlaltftc.com/the-pid-controller for info. */
+ * See https://www.ctrlaltftc.com/the-pid-controller for info.
+ * Use overridePower() if you want to set raw powers to motors. */
 public class PIDController {
     private DcMotor motor;
+    private String motorName;
     // PID vars
     private double Kp, Ki, Kd;
     private final double integralSumMax = (Ki == 0) ? 0.25 : 0.25/Ki;
@@ -25,6 +27,7 @@ public class PIDController {
      * @param Ki Integral coefficient (I in PID)
      * @param Kd Derivative coefficient (D in PID) */
     PIDController(HardwareMap hardwareMap, String motorName, double Kp, double Ki, double Kd) {
+        this.motorName = motorName;
         // Initialize PID variables
         timer = new ElapsedTime();
         goalPosition = 0;
@@ -37,10 +40,10 @@ public class PIDController {
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    /** Sets a new goal position for the PIDController to move towards. */
-    protected void setGoalPosition(int goalPosition) {
-        this.goalPosition = goalPosition;
-        // Reset possible extremes
+    /** Sets a new target position for the PIDController to move towards. */
+    protected void setTargetPosition(int encoder) {
+        this.goalPosition = encoder;
+        // Reset PID variables
         pError = 0;
         integralSum = 0;
     }
@@ -79,5 +82,11 @@ public class PIDController {
      * Run this code after update(), or overridePower() will do nothing. */
     protected void overridePower(double power) {
         motor.setPower(power);
+    }
+
+    /** Telemetry */
+    protected void telemetry(Telemetry telemetry) {
+        telemetry.addData(motorName + " targetPosition", motor.getTargetPosition());
+        telemetry.addData(motorName + " currentPosition", motor.getCurrentPosition());
     }
 }

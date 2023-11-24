@@ -105,29 +105,16 @@ public abstract class SystemsManager extends OpMode {
     }
 
     /** Updates arm movement.
-     * Right and left trigger moves the arm.
-     * Uses .moveByEncoder(). Only use if ArmCore's RUN_TO_POSITION works.
+     * TODO inputs
      * @param controllerNum Determines the driver number that operates the machine system.
      *                      Receives 1 or 2; otherwise does nothing. */
     protected void updateArm(int controllerNum) {
-        double raise;
-
-        switch(controllerNum) {
-            case 1:
-                raise = gamepad1.right_trigger - gamepad1.left_trigger;
-                break;
-            case 2:
-                raise = gamepad2.right_trigger - gamepad2.left_trigger;
-                break;
-            default:
-                raise = 0;
-        }
-        armCore.moveByEncoder((int)raise*1000);
+        // TODO
     }
 
     /** Updates arm movement.
      * Right and left trigger moves the arm.
-     * Uses .setPower(). Only use if ArmCore's RUN_TO_POSITION doesn't work.
+     * Uses setPower(). Only use if ArmCore's RUN_TO_POSITION doesn't work.
      * @param controllerNum Determines the driver number that operates the machine system.
      *                      Receives 1 or 2; otherwise does nothing. */
 
