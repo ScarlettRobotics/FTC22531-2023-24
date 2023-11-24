@@ -24,14 +24,10 @@ public class DrivetrainCore {
 
         /** When coding autonomous for the robot,
          * resetting the encoder values to zero for each motor makes coding autonomous easier. */
-        // Reset encoder values
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // encoders don't set to 0 by itself
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftMotor.setTargetPosition(0);
-        rightMotor.setTargetPosition(0);
-
-        leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // mode doesn't use encoders to set raw motor powers
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // more consistent this way
     }
 
     /** setMoveVelocity

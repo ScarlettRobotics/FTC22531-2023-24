@@ -14,7 +14,8 @@ public class ArmCore {
 
     ArmCore(HardwareMap hardwareMap) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // mode doesn't use encoders to set raw motor powers. more consistent this way
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /** Returns the target position of the arm. */
