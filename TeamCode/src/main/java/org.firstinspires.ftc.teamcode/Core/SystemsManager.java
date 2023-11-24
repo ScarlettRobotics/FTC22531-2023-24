@@ -6,19 +6,25 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/** Intended to be inherited from driver portion OpModes.
+ * Takes "---Core" classes, mapping them to controller inputs depending on controllerNum.
+ * All contained methods will receive "controllerNum" stating which gamepad/controller controls each system part.
+ * For example, "updateMotorTank(1)" will have controller 1 control the robot.
+ * If you'd like to use FTC Dashboard, please refer to https://acmerobotics.github.io/ftc-dashboard/,
+ *  then "Getting Started." */
 public abstract class SystemsManager extends OpMode {
-    // Initialize drivetrain and slide classes
+    // Drivetrain and slide classes
     protected DrivetrainCore drivetrainCore;
     protected ArmCore armCore;
     protected ClawCore clawCore;
     protected DroneLauncherCore droneLauncherCore;
-    // TODO DEBUG comment out when competing
+    // FTC Dashboard telemetry variables
     FtcDashboard dashboard;
     Telemetry dashboardTelemetry;
 
     @Override
     public void init() {
-        // Define classes
+        // Initialize classes
         drivetrainCore = new DrivetrainCore(hardwareMap);
         armCore = new ArmCore(hardwareMap);
         clawCore = new ClawCore(hardwareMap);
@@ -28,8 +34,7 @@ public abstract class SystemsManager extends OpMode {
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
-
-        // TODO fancy telemetry comment out when competing
+        // Initialize FTC Dashboard variables
         dashboard = FtcDashboard.getInstance();
         dashboardTelemetry = dashboard.getTelemetry();
     }
@@ -168,6 +173,10 @@ public abstract class SystemsManager extends OpMode {
         if (close) clawCore.close();
     }
 
+    /** Checks for a button press to launch the drone.
+     * If drone does not launch, rotate the part attached to the servo by 180 degrees.
+     * @param controllerNum Determines the driver number that operates the machine system.
+     *                      Receives 1 or 2; otherwise does nothing. */
     protected void checkForDroneLaunch(int controllerNum) {
         boolean launching = false;
         switch (controllerNum) {
@@ -183,14 +192,16 @@ public abstract class SystemsManager extends OpMode {
 
     /** Telemetry */
     protected void telemetry(Telemetry telemetry) {
+        // Telemetry sent to Driver Hub
         drivetrainCore.telemetry(telemetry);
         armCore.telemetry(telemetry);
         clawCore.telemetry(telemetry);
-
-        // TODO fancy telemetry comment out when competing
+        droneLauncherCore.telemetry(telemetry);
+        // Telemetry sent to FTC Dashboard
         drivetrainCore.telemetry(dashboardTelemetry);
         armCore.telemetry(dashboardTelemetry);
         clawCore.telemetry(dashboardTelemetry);
+        droneLauncherCore.telemetry(dashboardTelemetry);
         dashboardTelemetry.update();
     }
 }
