@@ -188,8 +188,9 @@ public abstract class SystemsManager extends OpMode {
         clawCore.telemetry(telemetry);
 
         // TODO fancy telemetry comment out when competing
-        dashboardTelemetry.addData("x", 3.7);
-        dashboardTelemetry.addData("status", "alive");
+        drivetrainCore.telemetry(dashboardTelemetry);
+        armCore.telemetry(dashboardTelemetry);
+        clawCore.telemetry(dashboardTelemetry);
         dashboardTelemetry.update();
     }
 }
