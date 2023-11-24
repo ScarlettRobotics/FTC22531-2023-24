@@ -34,7 +34,7 @@ public class PIDController {
         // Initialize motor
         motor = hardwareMap.get(DcMotor.class, motorName);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // encoder doesn't normally reset to zero
-        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /** Sets a new goal position for the PIDController to move towards. */
@@ -73,5 +73,11 @@ public class PIDController {
 
         // reset timer for next instance
         timer.reset();
+    }
+
+    /** Overrides the set power from update() to the inputted power.
+     * Run this code after update(), or overridePower() will do nothing. */
+    protected void overridePower(double power) {
+        motor.setPower(power);
     }
 }
