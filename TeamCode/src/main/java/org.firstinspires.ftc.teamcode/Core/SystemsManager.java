@@ -196,10 +196,12 @@ public abstract class SystemsManager extends OpMode {
         drivetrainCore.telemetry(telemetry);
         armCore.telemetry(telemetry);
         clawCore.telemetry(telemetry);
+        droneLauncherCore.telemetry(telemetry);
         // Telemetry sent to FTC Dashboard
         drivetrainCore.telemetry(dashboardTelemetry);
         armCore.telemetry(dashboardTelemetry);
         clawCore.telemetry(dashboardTelemetry);
+        droneLauncherCore.telemetry(dashboardTelemetry);
         dashboardTelemetry.update();
     }
 }

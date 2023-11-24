@@ -55,16 +55,11 @@ public class DrivetrainCore {
 
     /** Telemetry in contained in each class for ease of access. */
     public void telemetry(Telemetry telemetry) {
-        telemetry.addData("\nCurrent class", "DrivetrainCore.java");
+        telemetry.addData("\nCURRENT CLASS", "DrivetrainCore.java");
         telemetry.addData("runMode", leftMotor.getMode());
-        // if motors aren't running don't pass extra values to telemetry
-        if (leftMotor.getPower() == rightMotor.getPower() && leftMotor.getPower() == 0) {
-            telemetry.addData("Motors Idle", "");
-        } else {
-            telemetry.addData("Left Power",
-                    "%4.2f", leftMotor.getPower());
-            telemetry.addData("Right Power",
-                    "%4.2f", rightMotor.getPower());
-        }
+        telemetry.addData("Left Power",
+                "%4.2f", leftMotor.getPower());
+        telemetry.addData("Right Power",
+                "%4.2f", rightMotor.getPower());
     }
 }
