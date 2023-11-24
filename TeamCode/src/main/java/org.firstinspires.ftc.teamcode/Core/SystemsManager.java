@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Core;
 
+import com.acmerobotics.dashboard.DashboardCore;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -9,6 +12,9 @@ public abstract class SystemsManager extends OpMode {
     protected ArmCore armCore;
     protected ClawCore clawCore;
     protected DroneLauncherCore droneLauncherCore;
+    // TODO DEBUG comment out when competing
+    FtcDashboard dashboard;
+    Telemetry dashboardTelemetry;
 
     @Override
     public void init() {
@@ -22,8 +28,11 @@ public abstract class SystemsManager extends OpMode {
         // Telemetry
         telemetry.addData("STATUS: ", "Initialized"); // the FTC equivalent to println()
         telemetry.addData("FTC Team #", "22531");
-    }
 
+        // TODO fancy telemetry comment out when competing
+        dashboard = FtcDashboard.getInstance();
+        dashboardTelemetry = dashboard.getTelemetry();
+    }
 
     /** Updates drivetrain state based on joystick movement. Uses tank drive controls.
      * @param controllerNum Determines the driver number that operates the machine system.
@@ -177,5 +186,11 @@ public abstract class SystemsManager extends OpMode {
         drivetrainCore.telemetry(telemetry);
         armCore.telemetry(telemetry);
         clawCore.telemetry(telemetry);
+
+        // TODO fancy telemetry comment out when competing
+        drivetrainCore.telemetry(dashboardTelemetry);
+        armCore.telemetry(dashboardTelemetry);
+        clawCore.telemetry(dashboardTelemetry);
+        dashboardTelemetry.update();
     }
 }
