@@ -15,9 +15,10 @@ public class ArmCore {
 
     ArmCore(HardwareMap hardwareMap) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armMotorNew = new PIDController(hardwareMap, "armMotor",
                 0, 0, 0);
+        // mode doesn't use encoders to set raw motor powers. more consistent this way
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /** Sets a new target position for the motor. */

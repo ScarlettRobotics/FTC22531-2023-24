@@ -39,6 +39,14 @@ public abstract class SystemsManager extends OpMode {
         dashboardTelemetry = dashboard.getTelemetry();
     }
 
+    /** Receives a gamepad joystick input and returns zero if below a value. */
+    private double noDrift(double stick, double drift) {
+        if (stick < drift && stick > 0-drift) {
+            return 0;
+        }
+        return stick;
+    }
+
     /** Updates drivetrain state based on joystick movement. Uses tank drive controls.
      * @param controllerNum Determines the driver number that operates the machine system.
      *                      Receives 1 or 2; otherwise does nothing.
@@ -62,7 +70,8 @@ public abstract class SystemsManager extends OpMode {
                 left = 0;
                 right = 0;
         }
-        drivetrainCore.setMoveVelocity(left, right);
+        drivetrainCore.setMoveVelocity(noDrift(left, 0.05),
+                noDrift(right, 0.05));
     }
 
     /** Updates drivetrain state based on joystick movement. Uses arcade drive controls.
@@ -101,7 +110,8 @@ public abstract class SystemsManager extends OpMode {
                 forward = 0;
                 turn = 0;
         }
-        drivetrainCore.setMoveVelocity(forward + turn, forward - turn);
+        drivetrainCore.setMoveVelocity(noDrift(forward + turn, 0.05),
+                noDrift(forward - turn, 0.05));
     }
 
     /** Updates arm movement.
