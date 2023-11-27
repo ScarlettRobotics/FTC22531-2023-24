@@ -21,6 +21,9 @@ public abstract class SystemsManager extends OpMode {
     // FTC Dashboard telemetry variables
     FtcDashboard dashboard;
     Telemetry dashboardTelemetry;
+    // Variables used in methods
+    private int armPixelLevel;
+    private boolean pGamepadUp, pGamepadDown;
 
     @Override
     public void init() {
@@ -37,6 +40,10 @@ public abstract class SystemsManager extends OpMode {
         // Initialize FTC Dashboard variables
         dashboard = FtcDashboard.getInstance();
         dashboardTelemetry = dashboard.getTelemetry();
+        // Initialize method variables
+        armPixelLevel = 0;
+        pGamepadUp = false;
+        pGamepadDown = false;
     }
 
     /** Receives a gamepad joystick input and returns zero if below a value. */
@@ -115,11 +122,37 @@ public abstract class SystemsManager extends OpMode {
     }
 
     /** Updates arm movement.
-     * TODO inputs
+     * Press LSB to reset the arm to its pick up location.
+     * Use the dpad to move the arm to different pixel levels.
+     *  If in base position, pressing dpadDown will move the arm to its highest position.
      * @param controllerNum Determines the driver number that operates the machine system.
      *                      Receives 1 or 2; otherwise does nothing. */
     protected void updateArm(int controllerNum) {
+        boolean gamepadLSB, gamepadDpadUp, gamepadDpadDown;
+        switch (controllerNum) {
+            case 1:
+                gamepadLSB = gamepad1.left_stick_button;
+                gamepadDpadUp = gamepad1.dpad_up;
+                gamepadDpadDown = gamepad1.dpad_down;
+                break;
+            case 2:
+                gamepadLSB = gamepad2.left_stick_button;
+                gamepadDpadUp = gamepad2.dpad_up;
+                gamepadDpadDown = gamepad2.dpad_down;
+                break;
+            default:
+                gamepadLSB = false;
+                gamepadDpadUp = false;
+                gamepadDpadDown = false;
+        }/*
+        if (gamepadDpadUp || gamepadDpadDown) {
+            if (armCore.getTargetPosition() == )
+            if (gamepadDpadUp) armPixelLevel
+        }*/
+        pGamepadUp = gamepadDpadUp;
+        pGamepadDown = gamepadDpadDown;
         // TODO
+
     }
 
     /** Updates arm movement.
