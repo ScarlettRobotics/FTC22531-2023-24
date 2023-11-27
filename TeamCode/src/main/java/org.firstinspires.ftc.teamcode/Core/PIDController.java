@@ -16,7 +16,7 @@ public class PIDController {
     // PID vars
     private double Kp, Ki, Kd;
     private final double integralSumMax = (Ki == 0) ? 0.25 : 0.25/Ki;
-    private int goalPosition, currentPosition;
+    private int targetPosition, currentPosition;
     private int error, pError;
     private double derivative, integralSum;
     // Measures time passed in millis
@@ -30,7 +30,7 @@ public class PIDController {
         this.motorName = motorName;
         // Initialize PID variables
         timer = new ElapsedTime();
-        goalPosition = 0;
+        targetPosition = 0;
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;
@@ -42,10 +42,15 @@ public class PIDController {
 
     /** Sets a new target position for the PIDController to move towards. */
     protected void setTargetPosition(int encoder) {
-        this.goalPosition = encoder;
+        this.targetPosition = encoder;
         // Reset PID variables
         pError = 0;
         integralSum = 0;
+    }
+
+    /** Returns targetPosition */
+    protected int getTargetPosition() {
+        return targetPosition;
     }
 
     /** Moves the controller towards goalPosition encoder location.
@@ -53,11 +58,11 @@ public class PIDController {
     protected void update() {
         currentPosition = motor.getCurrentPosition();
         // Exit if already at goalPosition
-        if (goalPosition == currentPosition) {
+        if (targetPosition == currentPosition) {
             return;
         }
         // Distance between goal and current
-        error = goalPosition - currentPosition;
+        error = targetPosition - currentPosition;
 
         // rate of change of error
         // timer.seconds() is time passed since last run

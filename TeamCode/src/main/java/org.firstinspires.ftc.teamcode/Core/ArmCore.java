@@ -26,6 +26,11 @@ public class ArmCore {
         armMotorNew.setTargetPosition(encoder);
     }
 
+    /** Returns targetPosition */
+    protected int getTargetPosition() {
+        return armMotorNew.getTargetPosition();
+    }
+
     /** Updates the PIDController to move towards the provided goal position. */
     protected void update() {
         armMotorNew.update();
