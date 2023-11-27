@@ -45,11 +45,9 @@ public class ArmCore {
     protected void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCURRENT CLASS", "ArmCore.java");
         telemetry.addData("runMode", armMotor.getMode());
-        if (armMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
-            telemetry.addData("targetPosition", armMotor.getTargetPosition());
-            telemetry.addData("currentPosition", armMotor.getCurrentPosition());
-        }
         telemetry.addData("power", armMotor.getPower());
+        telemetry.addData("targetPosition", armMotor.getTargetPosition());
+        telemetry.addData("currentPosition", armMotor.getCurrentPosition());
         armMotorNew.telemetry(telemetry);
     }
 }
