@@ -110,8 +110,8 @@ public abstract class SystemsManager extends OpMode {
                 forward = 0;
                 turn = 0;
         }
-        drivetrainCore.setMoveVelocity(noDrift(forward + turn, 0.05),
-                noDrift(forward - turn, 0.05));
+        drivetrainCore.setMoveVelocity(noDrift(forward - turn, 0.05),
+                noDrift(forward + turn, 0.05));
     }
 
     /** Updates arm movement.
