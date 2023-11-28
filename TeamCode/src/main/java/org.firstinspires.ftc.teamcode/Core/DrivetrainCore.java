@@ -56,16 +56,12 @@ public class DrivetrainCore {
         // left motor telemetry
         telemetry.addData("Left Power",
                 "%4.2f", leftMotor.getPower());
-        telemetry.addData("Left currentPosition",
-                "%4.2f", leftMotor.getCurrentPosition());
-        telemetry.addData("Left targetPosition",
-                "%4.2f", leftMotor.getTargetPosition());
+        telemetry.addData("Left currentPosition", leftMotor.getCurrentPosition());
+        telemetry.addData("Left targetPosition", leftMotor.getTargetPosition());
         // right motor telemetry
         telemetry.addData("Right Power",
                 "%4.2f", rightMotor.getPower());
-        telemetry.addData("Right currentPosition",
-                "%4.2f", rightMotor.getCurrentPosition());
-        telemetry.addData("Right targetPosition",
-                "%4.2f", rightMotor.getTargetPosition());
+        telemetry.addData("Right currentPosition", rightMotor.getCurrentPosition());
+        telemetry.addData("Right targetPosition", rightMotor.getTargetPosition());
     }
 }
