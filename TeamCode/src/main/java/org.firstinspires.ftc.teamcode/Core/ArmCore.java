@@ -16,7 +16,7 @@ public class ArmCore {
     public ArmCore(HardwareMap hardwareMap) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
         armMotorAuto = new PIDController(hardwareMap, "armMotor",
-                0.01, 0.0001, 0.1, 0.5);
+                0.04, 0.001, 0.001, 0.5);
         // mode doesn't use encoders to set raw motor powers. more consistent this way
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
