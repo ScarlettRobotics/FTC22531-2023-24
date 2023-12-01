@@ -20,9 +20,9 @@ public class DrivetrainCore {
         leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
         rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
         leftMotorAuto = new PIDController(hardwareMap, "leftMotor",
-                0, 0, 0, 1);
+                0.01, 0.0003, 0.0003, 1);
         rightMotorAuto = new PIDController(hardwareMap, "rightMotor",
-                0, 0, 0, 1);
+                0.01, 0.0003, 0.0003, 1);
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -36,8 +36,7 @@ public class DrivetrainCore {
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // more consistent this way
     }
 
-    /** Sets a new target position based on the current position, moving by the input.
-     * Make sure everything isn't moving before doing this. */
+    /** Sets a new target position based on the current position, moving by the input. */
     public void moveByEncoder(int leftEncoder, int rightEncoder) {
         leftMotorAuto.moveByEncoder(leftEncoder);
         rightMotorAuto.moveByEncoder(rightEncoder);
@@ -91,5 +90,8 @@ public class DrivetrainCore {
                 "%4.2f", rightMotor.getPower());
         telemetry.addData("Right currentPosition", rightMotor.getCurrentPosition());
         telemetry.addData("Right targetPosition", rightMotor.getTargetPosition());
+        // auto telemetry
+        leftMotorAuto.telemetry(telemetry);
+        rightMotorAuto.telemetry(telemetry);
     }
 }

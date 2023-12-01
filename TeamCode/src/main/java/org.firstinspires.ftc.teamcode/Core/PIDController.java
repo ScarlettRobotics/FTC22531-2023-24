@@ -51,10 +51,9 @@ public class PIDController {
         integralSum = 0;
     }
 
+    /** Sets a new target position based on the current position, moving by the input. */
     protected void moveByEncoder(int encoder) {
-        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        this.targetPosition = encoder;
+        this.targetPosition = motor.getTargetPosition() + encoder;
         // Reset PID variables
         pError = 0;
         integralSum = 0;

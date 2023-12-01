@@ -13,6 +13,7 @@ public class DrivetrainPIDTest extends OpMode {
     DrivetrainCore drivetrainCore;
     FtcDashboard dashboard;
     Telemetry dashboardTelemetry;
+    boolean pDpadUp, pDpadDown, pDpadLeft, pDpadRight;
     @Override
     public void init() {
         drivetrainCore = new DrivetrainCore(hardwareMap);
@@ -26,14 +27,19 @@ public class DrivetrainPIDTest extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.dpad_up) drivetrainCore.moveByEncoder(300, 300);
-        if (gamepad1.dpad_down) drivetrainCore.moveByEncoder(-300, -300);
-        if (gamepad1.dpad_left) drivetrainCore.moveByEncoder(-200, 200);
-        if (gamepad1.dpad_right) drivetrainCore.moveByEncoder(200, -200);
+        if (gamepad1.dpad_up && !pDpadUp) drivetrainCore.moveByEncoder(-1000, -1000);
+        if (gamepad1.dpad_down && !pDpadDown) drivetrainCore.moveByEncoder(1000, 1000);
+        if (gamepad1.dpad_left && !pDpadLeft) drivetrainCore.moveByEncoder(-500, 500);
+        if (gamepad1.dpad_right && !pDpadRight) drivetrainCore.moveByEncoder(500, -500);
         drivetrainCore.updateAuto();
         // Telemetry
         drivetrainCore.telemetry(telemetry);
         drivetrainCore.telemetry(dashboardTelemetry);
         dashboardTelemetry.update();
+        // update prev vars
+        pDpadUp = gamepad1.dpad_up;
+        pDpadDown = gamepad1.dpad_down;
+        pDpadLeft = gamepad1.dpad_left;
+        pDpadRight = gamepad1.dpad_right;
     }
 }
