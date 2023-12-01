@@ -32,7 +32,7 @@ public class ArmCore {
     }
 
     /** Updates the PIDController to move towards the provided goal position. */
-    public void update() {
+    public void updateAuto() {
         armMotorAuto.update();
     }
 

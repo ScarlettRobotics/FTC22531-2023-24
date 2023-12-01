@@ -29,7 +29,7 @@ public class ArmPIDTest extends OpMode {
         if (gamepad1.dpad_up) armCore.setTargetPosition(300);
         if (gamepad1.dpad_right) armCore.setTargetPosition(100);
         if (gamepad1.dpad_down) armCore.setTargetPosition(0);
-        armCore.update();
+        armCore.updateAuto();
         // Telemetry
         armCore.telemetry(telemetry);
         armCore.telemetry(dashboardTelemetry);
