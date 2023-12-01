@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.ArmCore;
 
 /** Moves the arm to preset locations.
- * Use FTC dashbaord to see how PID variables need to be tweaked. */
+ * Use FTC dashboard to see how PID variables need to be tweaked. */
 @TeleOp(name = "ArmPIDTest", group = "concepts")
 public class ArmPIDTest extends OpMode {
     ArmCore armCore;
@@ -29,7 +29,7 @@ public class ArmPIDTest extends OpMode {
         if (gamepad1.dpad_up) armCore.setTargetPosition(300);
         if (gamepad1.dpad_right) armCore.setTargetPosition(100);
         if (gamepad1.dpad_down) armCore.setTargetPosition(0);
-        armCore.update();
+        armCore.updateAuto();
         // Telemetry
         armCore.telemetry(telemetry);
         armCore.telemetry(dashboardTelemetry);

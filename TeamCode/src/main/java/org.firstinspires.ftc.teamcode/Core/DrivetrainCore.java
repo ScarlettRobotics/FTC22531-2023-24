@@ -11,12 +11,18 @@ public class DrivetrainCore {
     /** Initialization is done within DrivetrainCore for ease of access. */
     private DcMotor leftMotor;
     private DcMotor rightMotor;
+    private PIDController leftMotorAuto;
+    private PIDController rightMotorAuto;
 
     /** Initializes 2 DcMotor Objects for the 2 wheels and sets movement directions */
     public DrivetrainCore(HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
         leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
         rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
+        leftMotorAuto = new PIDController(hardwareMap, "leftMotor",
+                0.01, 0.0003, 0.0003, 1);
+        rightMotorAuto = new PIDController(hardwareMap, "rightMotor",
+                0.01, 0.0003, 0.0003, 1);
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -28,6 +34,27 @@ public class DrivetrainCore {
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // mode doesn't use encoders to set raw motor powers
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // more consistent this way
+    }
+
+    /** Sets a new target position based on the current position, moving by the input. */
+    public void moveByEncoder(int leftEncoder, int rightEncoder) {
+        leftMotorAuto.moveByEncoder(leftEncoder);
+        rightMotorAuto.moveByEncoder(rightEncoder);
+    }
+
+    /** Returns left targetPosition */
+    protected int getTargetPositionLeft() {
+        return leftMotorAuto.getTargetPosition();
+    }
+    /** Returns right targetPosition */
+    protected int getTargetPositionRight() {
+        return rightMotorAuto.getTargetPosition();
+    }
+
+    /** Updates the PIDController to move towards the provided goal position. */
+    public void updateAuto() {
+        leftMotorAuto.update();
+        rightMotorAuto.update();
     }
 
     /** setMoveVelocity
@@ -63,5 +90,8 @@ public class DrivetrainCore {
                 "%4.2f", rightMotor.getPower());
         telemetry.addData("Right currentPosition", rightMotor.getCurrentPosition());
         telemetry.addData("Right targetPosition", rightMotor.getTargetPosition());
+        // auto telemetry
+        leftMotorAuto.telemetry(telemetry);
+        rightMotorAuto.telemetry(telemetry);
     }
 }
