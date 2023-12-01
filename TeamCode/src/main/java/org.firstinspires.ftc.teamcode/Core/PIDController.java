@@ -51,6 +51,15 @@ public class PIDController {
         integralSum = 0;
     }
 
+    protected void moveByEncoder(int encoder) {
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.targetPosition = encoder;
+        // Reset PID variables
+        pError = 0;
+        integralSum = 0;
+    }
+
     /** Returns targetPosition */
     protected int getTargetPosition() {
         return targetPosition;

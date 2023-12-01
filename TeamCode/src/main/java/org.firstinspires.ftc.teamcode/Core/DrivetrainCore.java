@@ -36,10 +36,11 @@ public class DrivetrainCore {
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // more consistent this way
     }
 
-    /** Sets a new target position for the motor. */
-    public void setTargetPosition(int leftEncoder, int rightEncoder) {
-        leftMotorAuto.setTargetPosition(leftEncoder);
-        rightMotorAuto.setTargetPosition(rightEncoder);
+    /** Sets a new target position based on the current position, moving by the input.
+     * Make sure everything isn't moving before doing this. */
+    public void moveByEncoder(int leftEncoder, int rightEncoder) {
+        leftMotorAuto.moveByEncoder(leftEncoder);
+        rightMotorAuto.moveByEncoder(rightEncoder);
     }
 
     /** Returns left targetPosition */
