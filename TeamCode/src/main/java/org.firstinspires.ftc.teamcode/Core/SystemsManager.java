@@ -154,6 +154,7 @@ public abstract class SystemsManager extends OpMode {
             // not at topmost pixel level
             if (armPixelLevel != pixelLevelEncoders.length-1) {
                 armCore.setTargetPosition(pixelLevelEncoders[armPixelLevel+1]);
+                armPixelLevel++;
             }
         }
         // Move down by one pixel level
@@ -161,10 +162,12 @@ public abstract class SystemsManager extends OpMode {
             // not at bottommost pixel level and selecting a pixel level
             if (armPixelLevel > 0) {
                 armCore.setTargetPosition(pixelLevelEncoders[armPixelLevel-1]);
+                armPixelLevel--;
             }
-            // at ground level
+            // at ground level, move to highest position
             if (armPixelLevel == -1) {
                 armCore.setTargetPosition(pixelLevelEncoders[pixelLevelEncoders.length-1]);
+                armPixelLevel = pixelLevelEncoders.length-1;
             }
         }
         armCore.update();
@@ -193,7 +196,7 @@ public abstract class SystemsManager extends OpMode {
             default:
                 power = 0;
         }
-        armCore.setPower(power/2);
+        if (power != 0) armCore.setPower(power/2);
     }
 
     /** Updates the claw's movement.
