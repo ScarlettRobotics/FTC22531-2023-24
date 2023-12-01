@@ -144,9 +144,9 @@ public abstract class SystemsManager extends OpMode {
                 gamepadDpadUp = false;
                 gamepadDpadDown = false;
         }
-        // TODO
+        // Move to pixel pickup
         if (gamepadLSB) {
-            armCore.setTargetPosition(-3300); // Move to ground position
+            armCore.setTargetPosition(-3250); // Move to ground position
             armPixelLevel = -1; // at ground pos
         }
         // Move up by one pixel level
