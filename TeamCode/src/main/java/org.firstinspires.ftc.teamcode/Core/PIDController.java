@@ -76,19 +76,19 @@ public class PIDController {
         // Distance between goal and current
         error = targetPosition - currentPosition;
 
-        // rate of change of error
-        // timer.seconds() is time passed since last run
-        derivative = (error - pError) / timer.seconds();
-
         // sum of all errors over time
         // timer.seconds() is time passed since last run
         integralSum += error * timer.seconds();
         // prevent integralSum from increasing by too much
         if (integralSum > integralSumMax) integralSum = integralSumMax;
 
+        // rate of change of error
+        // timer.seconds() is time passed since last run
+        derivative = (error - pError) / timer.seconds();
+
         double power = Kp * error +
-                Ki * derivative +
-                Kd * integralSum;
+                Ki * integralSum +
+                Kd * derivative;
 
         // set power of motor based on powerCap
         if (power < 0-powerCap) motor.setPower(0-powerCap);
