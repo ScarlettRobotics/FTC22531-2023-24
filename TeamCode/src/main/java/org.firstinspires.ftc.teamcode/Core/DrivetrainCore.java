@@ -19,8 +19,8 @@ public class DrivetrainCore {
         rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
 
         // Set motor movement directions
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         /** When coding autonomous for the robot,
          * resetting the encoder values to zero for each motor makes coding autonomous easier. */
