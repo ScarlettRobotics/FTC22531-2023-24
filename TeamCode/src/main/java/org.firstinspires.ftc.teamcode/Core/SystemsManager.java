@@ -128,20 +128,25 @@ public abstract class SystemsManager extends OpMode {
 
     protected void updateArm(int controllerNum){
         double power;
+        boolean lifting;
 
         switch(controllerNum) {
             case 1:
                 // Move left/right wheels based on left/right stick movement
                 power = gamepad1.left_trigger - gamepad1.right_trigger;
+                lifting = gamepad1.dpad_up;
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
                 power = gamepad2.left_trigger - gamepad2.right_trigger;
+                lifting = gamepad2.dpad_up;
                 break;
             default:
                 power = 0;
+                lifting = false;
         }
-        if (power != 0) armCore.setPower(power/2);
+        armCore.setPower(power/2);
+        if (lifting) armCore.setPower(1);
     }
 
     /** Updates the claw's movement.
