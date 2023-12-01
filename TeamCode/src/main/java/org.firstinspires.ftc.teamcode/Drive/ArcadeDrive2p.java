@@ -6,7 +6,6 @@ import org.firstinspires.ftc.teamcode.Core.*;
 
 @TeleOp(name = "ArcadeDrive2p", group = "arcade")
 public class ArcadeDrive2p extends SystemsManager {
-
     @Override
     public void loop() {
         // Telemetry
@@ -14,6 +13,7 @@ public class ArcadeDrive2p extends SystemsManager {
         // update drivetrain
         updateMotorArcade(1);
         updateArm(2);
+        updateArmBlind(2); // blind controls exist to make fine tuned adjustments
         updateClaw(2);
         checkForDroneLaunch(1);
     }
