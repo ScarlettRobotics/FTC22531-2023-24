@@ -152,7 +152,10 @@ public abstract class SystemsManager extends OpMode {
         pGamepadUp = gamepadDpadUp;
         pGamepadDown = gamepadDpadDown;
         // TODO
-
+        if (gamepadLSB) armCore.setTargetPosition(0);
+        if (gamepadDpadDown) armCore.setTargetPosition(100);
+        if (gamepadDpadUp) armCore.setTargetPosition(400);
+        armCore.update();
     }
 
     /** Updates arm movement.

@@ -71,11 +71,13 @@ public class PIDController {
         // sum of all errors over time
         // timer.seconds() is time passed since last run
         integralSum += error * timer.seconds();
+        // prevent integralSum from increasing by too much
+        if (integralSum > integralSumMax) integralSum = integralSumMax;
 
         // set power of motor
         motor.setPower(Kp * error +
                 Ki * derivative +
-                Kp * integralSum);
+                Kd * integralSum);
 
         pError = error;
 
@@ -91,7 +93,8 @@ public class PIDController {
 
     /** Telemetry */
     protected void telemetry(Telemetry telemetry) {
-        telemetry.addData(motorName + " targetPosition", motor.getTargetPosition());
+        telemetry.addData(motorName + " targetPosition", targetPosition);
         telemetry.addData(motorName + " currentPosition", motor.getCurrentPosition());
+        telemetry.addData(motorName + " power", motor.getPower());
     }
 }
