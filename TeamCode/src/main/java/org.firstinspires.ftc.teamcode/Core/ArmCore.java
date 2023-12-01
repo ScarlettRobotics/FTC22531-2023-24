@@ -11,11 +11,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * */
 public class ArmCore {
     private DcMotor armMotor;
-    private PIDController armMotorNew;
+    private PIDController armMotorAuto;
 
     public ArmCore(HardwareMap hardwareMap) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        armMotorNew = new PIDController(hardwareMap, "armMotor",
+        armMotorAuto = new PIDController(hardwareMap, "armMotor",
                 0.01, 0.0001, 0.1, 0.5);
         // mode doesn't use encoders to set raw motor powers. more consistent this way
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -23,17 +23,17 @@ public class ArmCore {
 
     /** Sets a new target position for the motor. */
     public void setTargetPosition(int encoder) {
-        armMotorNew.setTargetPosition(encoder);
+        armMotorAuto.setTargetPosition(encoder);
     }
 
     /** Returns targetPosition */
     protected int getTargetPosition() {
-        return armMotorNew.getTargetPosition();
+        return armMotorAuto.getTargetPosition();
     }
 
     /** Updates the PIDController to move towards the provided goal position. */
     public void update() {
-        armMotorNew.update();
+        armMotorAuto.update();
     }
 
     /** Moves the arm motor using the inputted power. */
@@ -48,6 +48,6 @@ public class ArmCore {
         telemetry.addData("power", armMotor.getPower());
         telemetry.addData("targetPosition", armMotor.getTargetPosition());
         telemetry.addData("currentPosition", armMotor.getCurrentPosition());
-        armMotorNew.telemetry(telemetry);
+        armMotorAuto.telemetry(telemetry);
     }
 }
