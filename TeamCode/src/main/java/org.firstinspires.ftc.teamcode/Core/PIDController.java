@@ -19,14 +19,16 @@ public class PIDController {
     private int targetPosition, currentPosition;
     private int error, pError;
     private double derivative, integralSum;
+    private double powerCap;
     // Measures time passed in millis
     ElapsedTime timer;
 
     /** @param motorName Name of motor when getting from hardwareMap.
-     * @param Kp Proportional coefficient (P in PID)
-     * @param Ki Integral coefficient (I in PID)
-     * @param Kd Derivative coefficient (D in PID) */
-    PIDController(HardwareMap hardwareMap, String motorName, double Kp, double Ki, double Kd) {
+     * @param Kp Proportional coefficient (P in PID). Input >0
+     * @param Ki Integral coefficient (I in PID). Input 0-1
+     * @param Kd Derivative coefficient (D in PID). Input 0-1
+     * @param powerCap Maximum power that motor can run at. Input 0-1 */
+    PIDController(HardwareMap hardwareMap, String motorName, double Kp, double Ki, double Kd, double powerCap) {
         this.motorName = motorName;
         // Initialize PID variables
         timer = new ElapsedTime();
@@ -34,6 +36,7 @@ public class PIDController {
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;
+        this.powerCap = powerCap;
         // Initialize motor
         motor = hardwareMap.get(DcMotor.class, motorName);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // encoder doesn't normally reset to zero
@@ -74,10 +77,14 @@ public class PIDController {
         // prevent integralSum from increasing by too much
         if (integralSum > integralSumMax) integralSum = integralSumMax;
 
-        // set power of motor
-        motor.setPower(Kp * error +
+        double power = Kp * error +
                 Ki * derivative +
-                Kd * integralSum);
+                Kd * integralSum;
+
+        // set power of motor based on powerCap
+        if (power < 0-powerCap) motor.setPower(0-powerCap);
+        else if (power > powerCap) motor.setPower(powerCap);
+        else motor.setPower(power);
 
         pError = error;
 
