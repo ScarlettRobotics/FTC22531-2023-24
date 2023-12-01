@@ -32,7 +32,7 @@ public class ArmCore {
     }
 
     /** Updates the PIDController to move towards the provided goal position. */
-    protected void update() {
+    public void update() {
         armMotorNew.update();
     }
 
@@ -42,7 +42,7 @@ public class ArmCore {
     }
 
     /** Telemetry */
-    protected void telemetry(Telemetry telemetry) {
+    public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCURRENT CLASS", "ArmCore.java");
         telemetry.addData("runMode", armMotor.getMode());
         telemetry.addData("power", armMotor.getPower());
