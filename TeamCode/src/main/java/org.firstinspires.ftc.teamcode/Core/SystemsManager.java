@@ -121,67 +121,12 @@ public abstract class SystemsManager extends OpMode {
     }
 
     /** Updates arm movement.
-     * Press LSB to reset the arm to its pick up location.
-     * Use the dpad to move the arm to different pixel levels.
-     *  If in base position, pressing dpadDown will move the arm to its highest position.
-     * @param controllerNum Determines the driver number that operates the machine system.
-     *                      Receives 1 or 2; otherwise does nothing. */
-    protected void updateArm(int controllerNum) {
-        boolean gamepadLSB, gamepadDpadUp, gamepadDpadDown;
-        switch (controllerNum) {
-            case 1:
-                gamepadLSB = gamepad1.left_stick_button;
-                gamepadDpadUp = gamepad1.dpad_up;
-                gamepadDpadDown = gamepad1.dpad_down;
-                break;
-            case 2:
-                gamepadLSB = gamepad2.left_stick_button;
-                gamepadDpadUp = gamepad2.dpad_up;
-                gamepadDpadDown = gamepad2.dpad_down;
-                break;
-            default:
-                gamepadLSB = false;
-                gamepadDpadUp = false;
-                gamepadDpadDown = false;
-        }
-        // Move to pixel pickup
-        if (gamepadLSB) {
-            armCore.setTargetPosition(-3250); // Move to ground position
-            armPixelLevel = -1; // at ground pos
-        }
-        // Move up by one pixel level
-        if (gamepadDpadUp && !pGamepadDpadUp) {
-            // not at topmost pixel level
-            if (armPixelLevel != pixelLevelEncoders.length-1) {
-                armCore.setTargetPosition(pixelLevelEncoders[armPixelLevel+1]);
-                armPixelLevel++;
-            }
-        }
-        // Move down by one pixel level
-        if (gamepadDpadDown && !pGamepadDpadDown) {
-            // not at bottommost pixel level and selecting a pixel level
-            if (armPixelLevel > 0) {
-                armCore.setTargetPosition(pixelLevelEncoders[armPixelLevel-1]);
-                armPixelLevel--;
-            }
-            // at ground level, move to highest position
-            if (armPixelLevel == -1) {
-                armCore.setTargetPosition(pixelLevelEncoders[pixelLevelEncoders.length-1]);
-                armPixelLevel = pixelLevelEncoders.length-1;
-            }
-        }
-        armCore.update();
-        pGamepadDpadUp = gamepadDpadUp;
-        pGamepadDpadDown = gamepadDpadDown;
-    }
-
-    /** Updates arm movement.
      * Right and left trigger moves the arm.
      * Uses setPower(). Only use if ArmCore's RUN_TO_POSITION doesn't work.
      * @param controllerNum Determines the driver number that operates the machine system.
      *                      Receives 1 or 2; otherwise does nothing. */
 
-    protected void updateArmBlind(int controllerNum){
+    protected void updateArm(int controllerNum){
         double power;
 
         switch(controllerNum) {
