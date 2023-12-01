@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.Core;
 
-import com.acmerobotics.dashboard.DashboardCore;
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -23,7 +21,8 @@ public abstract class SystemsManager extends OpMode {
     Telemetry dashboardTelemetry;
     // Variables used in methods
     private int armPixelLevel;
-    private boolean pGamepadUp, pGamepadDown;
+    private int[] pixelLevelEncoders = {-2800, -2670, -2620, -2520, -2400, -2270, -2100};
+    private boolean pGamepadDpadUp, pGamepadDpadDown;
 
     @Override
     public void init() {
@@ -42,8 +41,8 @@ public abstract class SystemsManager extends OpMode {
         dashboardTelemetry = dashboard.getTelemetry();
         // Initialize method variables
         armPixelLevel = 0;
-        pGamepadUp = false;
-        pGamepadDown = false;
+        pGamepadDpadUp = false;
+        pGamepadDpadDown = false;
     }
 
     /** Receives a gamepad joystick input and returns zero if below a value. */
@@ -144,18 +143,33 @@ public abstract class SystemsManager extends OpMode {
                 gamepadLSB = false;
                 gamepadDpadUp = false;
                 gamepadDpadDown = false;
-        }/*
-        if (gamepadDpadUp || gamepadDpadDown) {
-            if (armCore.getTargetPosition() == )
-            if (gamepadDpadUp) armPixelLevel
-        }*/
-        pGamepadUp = gamepadDpadUp;
-        pGamepadDown = gamepadDpadDown;
+        }
         // TODO
-        if (gamepadLSB) armCore.setTargetPosition(0);
-        if (gamepadDpadDown) armCore.setTargetPosition(100);
-        if (gamepadDpadUp) armCore.setTargetPosition(400);
+        if (gamepadLSB) {
+            armCore.setTargetPosition(-3300); // Move to ground position
+            armPixelLevel = -1; // at ground pos
+        }
+        // Move up by one pixel level
+        if (gamepadDpadUp && !pGamepadDpadUp) {
+            // not at topmost pixel level
+            if (armPixelLevel != pixelLevelEncoders.length-1) {
+                armCore.setTargetPosition(pixelLevelEncoders[armPixelLevel+1]);
+            }
+        }
+        // Move down by one pixel level
+        if (gamepadDpadDown && !pGamepadDpadDown) {
+            // not at bottommost pixel level and selecting a pixel level
+            if (armPixelLevel > 0) {
+                armCore.setTargetPosition(pixelLevelEncoders[armPixelLevel-1]);
+            }
+            // at ground level
+            if (armPixelLevel == -1) {
+                armCore.setTargetPosition(pixelLevelEncoders[pixelLevelEncoders.length-1]);
+            }
+        }
         armCore.update();
+        pGamepadDpadUp = gamepadDpadUp;
+        pGamepadDpadDown = gamepadDpadDown;
     }
 
     /** Updates arm movement.
