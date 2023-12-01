@@ -13,7 +13,7 @@ public class ArmCore {
     private DcMotor armMotor;
     private PIDController armMotorNew;
 
-    ArmCore(HardwareMap hardwareMap) {
+    public ArmCore(HardwareMap hardwareMap) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
         armMotorNew = new PIDController(hardwareMap, "armMotor",
                 0.01, 0.0001, 0.1, 0.5);
@@ -22,7 +22,7 @@ public class ArmCore {
     }
 
     /** Sets a new target position for the motor. */
-    protected void setTargetPosition(int encoder) {
+    public void setTargetPosition(int encoder) {
         armMotorNew.setTargetPosition(encoder);
     }
 
