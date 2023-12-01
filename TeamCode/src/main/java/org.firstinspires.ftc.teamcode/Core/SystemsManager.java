@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.Core;
 
-import com.acmerobotics.dashboard.DashboardCore;
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -21,6 +19,10 @@ public abstract class SystemsManager extends OpMode {
     // FTC Dashboard telemetry variables
     FtcDashboard dashboard;
     Telemetry dashboardTelemetry;
+    // Variables used in methods
+    private int armPixelLevel;
+    private int[] pixelLevelEncoders = {-2800, -2670, -2620, -2520, -2400, -2270, -2100};
+    private boolean pGamepadDpadUp, pGamepadDpadDown;
 
     @Override
     public void init() {
@@ -37,6 +39,10 @@ public abstract class SystemsManager extends OpMode {
         // Initialize FTC Dashboard variables
         dashboard = FtcDashboard.getInstance();
         dashboardTelemetry = dashboard.getTelemetry();
+        // Initialize method variables
+        armPixelLevel = 0;
+        pGamepadDpadUp = false;
+        pGamepadDpadDown = false;
     }
 
     /** Receives a gamepad joystick input and returns zero if below a value. */
@@ -116,32 +122,11 @@ public abstract class SystemsManager extends OpMode {
 
     /** Updates arm movement.
      * Right and left trigger moves the arm.
-     * Uses .moveByEncoder(). Only use if ArmCore's RUN_TO_POSITION works.
-     * @param controllerNum Determines the driver number that operates the machine system.
-     *                      Receives 1 or 2; otherwise does nothing. */
-    protected void updateArm(int controllerNum) {
-        double raise;
-
-        switch(controllerNum) {
-            case 1:
-                raise = gamepad1.right_trigger - gamepad1.left_trigger;
-                break;
-            case 2:
-                raise = gamepad2.right_trigger - gamepad2.left_trigger;
-                break;
-            default:
-                raise = 0;
-        }
-        armCore.moveByEncoder((int)raise*1000);
-    }
-
-    /** Updates arm movement.
-     * Right and left trigger moves the arm.
-     * Uses .setPower(). Only use if ArmCore's RUN_TO_POSITION doesn't work.
+     * Uses setPower(). Only use if ArmCore's RUN_TO_POSITION doesn't work.
      * @param controllerNum Determines the driver number that operates the machine system.
      *                      Receives 1 or 2; otherwise does nothing. */
 
-    protected void updateArmBlind(int controllerNum){
+    protected void updateArm(int controllerNum){
         double power;
 
         switch(controllerNum) {
@@ -156,7 +141,7 @@ public abstract class SystemsManager extends OpMode {
             default:
                 power = 0;
         }
-        armCore.setPower(power/2);
+        if (power != 0) armCore.setPower(power/2);
     }
 
     /** Updates the claw's movement.

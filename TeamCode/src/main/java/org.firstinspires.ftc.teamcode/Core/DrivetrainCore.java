@@ -53,9 +53,15 @@ public class DrivetrainCore {
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCURRENT CLASS", "DrivetrainCore.java");
         telemetry.addData("runMode", leftMotor.getMode());
+        // left motor telemetry
         telemetry.addData("Left Power",
                 "%4.2f", leftMotor.getPower());
+        telemetry.addData("Left currentPosition", leftMotor.getCurrentPosition());
+        telemetry.addData("Left targetPosition", leftMotor.getTargetPosition());
+        // right motor telemetry
         telemetry.addData("Right Power",
                 "%4.2f", rightMotor.getPower());
+        telemetry.addData("Right currentPosition", rightMotor.getCurrentPosition());
+        telemetry.addData("Right targetPosition", rightMotor.getTargetPosition());
     }
 }

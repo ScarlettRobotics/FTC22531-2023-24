@@ -11,45 +11,43 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * */
 public class ArmCore {
     private DcMotor armMotor;
+    private PIDController armMotorNew;
 
-    ArmCore(HardwareMap hardwareMap) {
+    public ArmCore(HardwareMap hardwareMap) {
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
+        armMotorNew = new PIDController(hardwareMap, "armMotor",
+                0.01, 0.0001, 0.1, 0.5);
         // mode doesn't use encoders to set raw motor powers. more consistent this way
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    /** Returns the target position of the arm. */
+    /** Sets a new target position for the motor. */
+    public void setTargetPosition(int encoder) {
+        armMotorNew.setTargetPosition(encoder);
+    }
+
+    /** Returns targetPosition */
     protected int getTargetPosition() {
-        return armMotor.getTargetPosition();
+        return armMotorNew.getTargetPosition();
     }
 
-    /** Sets the arm to move to the inputted encoder position. */
-    protected void goToEncoder(int encoder) {
-        armMotor.setTargetPosition(encoder);
+    /** Updates the PIDController to move towards the provided goal position. */
+    public void update() {
+        armMotorNew.update();
     }
 
-    /** Sets the arm to change the target encoder position by the input. */
-    protected void moveByEncoder(int encoder) {
-        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        armMotor.setTargetPosition(encoder);
-        armMotor.setPower(0.25);
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
-    /** Moves the arm motor as a */
+    /** Moves the arm motor using the inputted power. */
     protected void setPower(double power){
         armMotor.setPower(power);
-
     }
 
     /** Telemetry */
-    protected void telemetry(Telemetry telemetry) {
+    public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCURRENT CLASS", "ArmCore.java");
         telemetry.addData("runMode", armMotor.getMode());
-        if (armMotor.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
-            telemetry.addData("targetPosition", armMotor.getTargetPosition());
-            telemetry.addData("currentPosition", armMotor.getCurrentPosition());
-        }
         telemetry.addData("power", armMotor.getPower());
+        telemetry.addData("targetPosition", armMotor.getTargetPosition());
+        telemetry.addData("currentPosition", armMotor.getCurrentPosition());
+        armMotorNew.telemetry(telemetry);
     }
 }
