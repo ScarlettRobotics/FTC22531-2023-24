@@ -20,6 +20,6 @@ public abstract class AutoRedBack extends LinearOpMode{
         armCore = new ArmCore(hardwareMap);
         clawCore = new ClawCore(hardwareMap);
 
-        drivetrainCore.setTargetPosition(0, 0);
+        drivetrainCore.setTargetPosition(180, 180);
     }
 }
