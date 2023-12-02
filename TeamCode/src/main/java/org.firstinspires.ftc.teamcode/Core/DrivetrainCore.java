@@ -31,6 +31,11 @@ public class DrivetrainCore {
         rightMotor.moveByEncoder(rightEncoder);
     }
 
+    public void setTargetPosition(int leftEncoder, int rightEncoder){
+        leftMotor.moveByEncoder(leftEncoder);
+        rightMotor.moveByEncoder(rightEncoder);
+    }
+
     /** Returns left targetPosition */
     protected int getTargetPositionLeft() {
         return leftMotor.getTargetPosition();
