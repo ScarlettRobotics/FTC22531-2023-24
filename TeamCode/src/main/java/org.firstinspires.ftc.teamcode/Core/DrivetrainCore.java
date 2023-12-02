@@ -9,52 +9,41 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class DrivetrainCore {
     /* Initialization */
     /** Initialization is done within DrivetrainCore for ease of access. */
-    private DcMotor leftMotor;
-    private DcMotor rightMotor;
-    private PIDController leftMotorAuto;
-    private PIDController rightMotorAuto;
+    private PIDController leftMotor;
+    private PIDController rightMotor;
 
     /** Initializes 2 DcMotor Objects for the 2 wheels and sets movement directions */
     public DrivetrainCore(HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
-        leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
-        rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
-        leftMotorAuto = new PIDController(hardwareMap, "leftMotor",
+        leftMotor = new PIDController(hardwareMap, "leftMotor",
                 0.01, 0.0003, 0.0003, 1);
-        rightMotorAuto = new PIDController(hardwareMap, "rightMotor",
+        rightMotor = new PIDController(hardwareMap, "rightMotor",
                 0.01, 0.0003, 0.0003, 1);
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        /** When coding autonomous for the robot,
-         * resetting the encoder values to zero for each motor makes coding autonomous easier. */
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // encoders don't set to 0 by itself
-        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // mode doesn't use encoders to set raw motor powers
-        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // more consistent this way
     }
 
     /** Sets a new target position based on the current position, moving by the input. */
     public void moveByEncoder(int leftEncoder, int rightEncoder) {
-        leftMotorAuto.moveByEncoder(leftEncoder);
-        rightMotorAuto.moveByEncoder(rightEncoder);
+        leftMotor.moveByEncoder(leftEncoder);
+        rightMotor.moveByEncoder(rightEncoder);
     }
 
     /** Returns left targetPosition */
     protected int getTargetPositionLeft() {
-        return leftMotorAuto.getTargetPosition();
+        return leftMotor.getTargetPosition();
     }
     /** Returns right targetPosition */
     protected int getTargetPositionRight() {
-        return rightMotorAuto.getTargetPosition();
+        return rightMotor.getTargetPosition();
     }
 
     /** Updates the PIDController to move towards the provided goal position. */
     public void updateAuto() {
-        leftMotorAuto.update();
-        rightMotorAuto.update();
+        leftMotor.update();
+        rightMotor.update();
     }
 
     /** setMoveVelocity
@@ -63,8 +52,8 @@ public class DrivetrainCore {
      * @param rightVelocity - power sent to the right motor
      */
     public void setMoveVelocity(double leftVelocity, double rightVelocity) {
-        leftMotor.setPower(changePower(leftVelocity));
-        rightMotor.setPower(changePower(rightVelocity));
+        leftMotor.overridePower(changePower(leftVelocity));
+        rightMotor.overridePower(changePower(rightVelocity));
     }
 
     /**
@@ -79,19 +68,7 @@ public class DrivetrainCore {
     /** Telemetry in contained in each class for ease of access. */
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCURRENT CLASS", "DrivetrainCore.java");
-        telemetry.addData("runMode", leftMotor.getMode());
-        // left motor telemetry
-        telemetry.addData("Left Power",
-                "%4.2f", leftMotor.getPower());
-        telemetry.addData("Left currentPosition", leftMotor.getCurrentPosition());
-        telemetry.addData("Left targetPosition", leftMotor.getTargetPosition());
-        // right motor telemetry
-        telemetry.addData("Right Power",
-                "%4.2f", rightMotor.getPower());
-        telemetry.addData("Right currentPosition", rightMotor.getCurrentPosition());
-        telemetry.addData("Right targetPosition", rightMotor.getTargetPosition());
-        // auto telemetry
-        leftMotorAuto.telemetry(telemetry);
-        rightMotorAuto.telemetry(telemetry);
+        leftMotor.telemetry(telemetry);
+        rightMotor.telemetry(telemetry);
     }
 }

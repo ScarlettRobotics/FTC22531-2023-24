@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Core;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -111,5 +112,9 @@ public class PIDController {
         telemetry.addData(motorName + " targetPosition", targetPosition);
         telemetry.addData(motorName + " currentPosition", motor.getCurrentPosition());
         telemetry.addData(motorName + " power", motor.getPower());
+    }
+
+    public void setDirection(DcMotorSimple.Direction direction) {
+        motor.setDirection(direction);
     }
 }

@@ -10,44 +10,36 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Methods that don't work: getTargetPosition(), goToEncoder(), moveByEncoder()
  * */
 public class ArmCore {
-    private DcMotor armMotor;
-    private PIDController armMotorAuto;
+    private PIDController armMotor;
 
     public ArmCore(HardwareMap hardwareMap) {
-        armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        armMotorAuto = new PIDController(hardwareMap, "armMotor",
+        armMotor = new PIDController(hardwareMap, "armMotor",
                 0.04, 0.001, 0.001, 0.5);
-        // mode doesn't use encoders to set raw motor powers. more consistent this way
-        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /** Sets a new target position for the motor. */
     public void setTargetPosition(int encoder) {
-        armMotorAuto.setTargetPosition(encoder);
+        armMotor.setTargetPosition(encoder);
     }
 
     /** Returns targetPosition */
     protected int getTargetPosition() {
-        return armMotorAuto.getTargetPosition();
+        return armMotor.getTargetPosition();
     }
 
     /** Updates the PIDController to move towards the provided goal position. */
     public void updateAuto() {
-        armMotorAuto.update();
+        armMotor.update();
     }
 
     /** Moves the arm motor using the inputted power. */
     protected void setPower(double power){
-        armMotor.setPower(power);
+        armMotor.overridePower(power);
     }
 
     /** Telemetry */
     public void telemetry(Telemetry telemetry) {
         telemetry.addData("\nCURRENT CLASS", "ArmCore.java");
-        telemetry.addData("runMode", armMotor.getMode());
-        telemetry.addData("power", armMotor.getPower());
-        telemetry.addData("targetPosition", armMotor.getTargetPosition());
-        telemetry.addData("currentPosition", armMotor.getCurrentPosition());
-        armMotorAuto.telemetry(telemetry);
+        armMotor.telemetry(telemetry);
     }
 }
