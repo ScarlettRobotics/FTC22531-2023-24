@@ -16,9 +16,9 @@ public class DrivetrainCore {
     public DrivetrainCore(HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
         leftMotor = new PIDController(hardwareMap, "leftMotor",
-                0.01, 0.0003, 0.0003, 1);
+                0.01, 0.0003, 0.0003, 0.1);
         rightMotor = new PIDController(hardwareMap, "rightMotor",
-                0.01, 0.0003, 0.0003, 1);
+                0.01, 0.0003, 0.0003, 0.1);
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
