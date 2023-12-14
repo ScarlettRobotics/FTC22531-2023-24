@@ -13,7 +13,7 @@ public class ClawCore {
 
     // Maps Servo motor variables to driver hub
     public ClawCore (HardwareMap hardwareMap) {
-        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
+        leftClaw = hardwareMap.get(Servo.class, "leftClaw"); 
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
     }
 

@@ -76,4 +76,13 @@ public class DrivetrainCore {
         leftMotor.telemetry(telemetry);
         rightMotor.telemetry(telemetry);
     }
+
+    public void strafeByEncoder(int i) {
+    }
+
+    public void rotateByEncoder(int i) {
+    }
+
+    public void forwardByEncoder(int i) {
+    }
 }
