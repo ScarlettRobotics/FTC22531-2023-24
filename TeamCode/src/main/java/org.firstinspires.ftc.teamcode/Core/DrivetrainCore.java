@@ -21,7 +21,7 @@ public class DrivetrainCore {
                 0.01, 0.0003, 0.0003, 0.1);
 
         // Set motor movement directions
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
