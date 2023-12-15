@@ -37,17 +37,31 @@ public class BlueBasic extends LinearOpMode {
 
             if (eventManager.eventOccurred(timer.time(), 0)) {
                 /* TODO INSTRUCTION */
-            } // event desc
+            } // end rotate 90 degrees
 
             if (eventManager.eventOccurred(timer.time(), 1)) {
                 /* TODO INSTRUCTION */
-            } // event desc
+            } // end forward to backdrop, move arm to backdrop position
 
             if (eventManager.eventOccurred(timer.time(), 2)) {
                 /* TODO INSTRUCTION */
-            } // event desc
+            } // end open claw
 
-            /* TODO etc. */
+            if (eventManager.eventOccurred(timer.time(), 3)) {
+                /* TODO INSTRUCTION */
+            } // end slightly move back
+
+            if (eventManager.eventOccurred(timer.time(), 4)) {
+                /* TODO INSTRUCTION */
+            } // end slighly move back
+
+            if (eventManager.eventOccurred(timer.time(), 5)) {
+                /* TODO INSTRUCTION */
+            } // end rotate 90 degrees right
+
+            if (eventManager.eventOccurred(timer.time(), 6)) {
+                /* TODO INSTRUCTION */
+            } // end move back to stop blocking backdrop
 
             addTelemetry(telemetry);
         }
@@ -61,9 +75,14 @@ public class BlueBasic extends LinearOpMode {
         timer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         eventManager = new EventManager();
         // Init timings
-        eventManager.addEvent(2); // event desc
-        //TODO eventManager.addEvent(xx); // event desc
-        //TODO eventManager.addEvent(xx); // event desc
+        eventManager.addEvent(1); // move forward
+        //TODO eventManager.addEvent(xx); // rotate 90 degrees
+        //TODO eventManager.addEvent(xx); // forward to backdrop, move arm to backdrop position
+        //TODO eventManager.addEvent(xx); // open claw
+        //TODO eventManager.addEvent(xx); // slightly move back
+        //TODO eventManager.addEvent(xx); // slightly move back
+        //TODO eventManager.addEvent(xx); // rotate 90 degrees right
+        //TODO eventManager.addEvent(xx); // move back to stop blocking backdrop
         /* TODO etc. */
         // Init core classes
         drivetrainCore = new DrivetrainCore(hardwareMap);
