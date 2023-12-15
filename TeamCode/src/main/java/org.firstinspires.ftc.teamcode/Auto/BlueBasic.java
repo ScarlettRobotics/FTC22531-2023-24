@@ -37,29 +37,33 @@ public class BlueBasic extends LinearOpMode {
 
             if (eventManager.eventOccurred(timer.time(), 0)) {
                 /* TODO INSTRUCTION */
-            } // end rotate 90 degrees
+            } // end move forward 1 space
 
             if (eventManager.eventOccurred(timer.time(), 1)) {
                 /* TODO INSTRUCTION */
-            } // end forward to backdrop, move arm to backdrop position
+            } // end rotate 90 degrees
 
             if (eventManager.eventOccurred(timer.time(), 2)) {
                 /* TODO INSTRUCTION */
-            } // end open claw
+            } // end forward to backdrop, move arm to backdrop position
 
             if (eventManager.eventOccurred(timer.time(), 3)) {
                 /* TODO INSTRUCTION */
-            } // end slightly move back
+            } // end open claw
 
             if (eventManager.eventOccurred(timer.time(), 4)) {
                 /* TODO INSTRUCTION */
-            } // end slighly move back
+            } // end slightly move back
 
             if (eventManager.eventOccurred(timer.time(), 5)) {
                 /* TODO INSTRUCTION */
-            } // end rotate 90 degrees right
+            } // end slighly move back
 
             if (eventManager.eventOccurred(timer.time(), 6)) {
+                /* TODO INSTRUCTION */
+            } // end rotate 90 degrees right
+
+            if (eventManager.eventOccurred(timer.time(), 7)) {
                 /* TODO INSTRUCTION */
             } // end move back to stop blocking backdrop
 
