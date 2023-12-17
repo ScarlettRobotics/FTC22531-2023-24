@@ -22,7 +22,7 @@ public class DrivetrainCore {
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     /** Sets a new target position based on the current position, moving by the input. */
