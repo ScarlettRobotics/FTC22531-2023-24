@@ -16,25 +16,14 @@ public class DrivetrainCore {
     public DrivetrainCore(HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
         leftMotor = new PIDController(hardwareMap, "leftMotor",
-                0.01, 0.0003, 0.0003, 0.1);
+                0.01, 0.0003, 0.0003, 0.3);
         rightMotor = new PIDController(hardwareMap, "rightMotor",
-                0.01, 0.0003, 0.0003, 0.1);
+                0.01, 0.0003, 0.0003, 0.3);
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
-
-    private ArrayList<PIDController> driveMotors;
-
-    // Map motor variables to driver hub
-    public DrivetrainCore(HardwareMap hardwareMap) {
-        driveMotors = new ArrayList<PIDController>();
-        // hardwareMap
-        for (int i=0; i<4; i++) {
-            driveMotors.add(new PIDController(hardwareMap, "driveMotor"+i,
-                    0.01, 0.0001, 0.0002, 0.3));
-        }
 
     /** Sets a new target position based on the current position, moving by the input. */
     public void moveByEncoder(int leftEncoder, int rightEncoder) {
@@ -88,30 +77,18 @@ public class DrivetrainCore {
         rightMotor.telemetry(telemetry);
     }
 
-    public void strafeByEncoder(int encoder) {
-
-        driveMotors.get(0).moveByEncoder(-encoder);
-        driveMotors.get(1).moveByEncoder(-encoder);
-        driveMotors.get(2).moveByEncoder(encoder);
-        driveMotors.get(3).moveByEncoder(encoder);
-
-    }
 
     public void rotateByEncoder(int encoder) {
 
-        driveMotors.get(0).moveByEncoder(-encoder);
-        driveMotors.get(1).moveByEncoder(-encoder);
-        driveMotors.get(2).moveByEncoder(-encoder);
-        driveMotors.get(3).moveByEncoder(-encoder);
+        leftMotor.moveByEncoder(-encoder);
+        rightMotor.moveByEncoder(encoder);
 
     }
 
     public void forwardByEncoder(int encoder) {
 
-        driveMotors.get(0).moveByEncoder(-encoder);
-        driveMotors.get(1).moveByEncoder(encoder);
-        driveMotors.get(2).moveByEncoder(encoder);
-        driveMotors.get(3).moveByEncoder(-encoder);
+            leftMotor.moveByEncoder(encoder);
+            rightMotor.moveByEncoder(encoder);
 
     }
 }
