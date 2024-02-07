@@ -97,36 +97,40 @@ public class AutoRedSpikeBack extends LinearOpMode {
             } // end find prop, strafe to align with centre, move arm to safe
             if (eventManager.eventOccurred(timer.time(), 1)) {
                 if (propLocation == 1) {
-                    drivetrainCore.forwardByEncoder(1000);
+                    // If prop in middle, drive straight forward to place pixel on spike mark.
                 } else {
-                    drivetrainCore.forwardByEncoder(700);
+                    // Otherwise, move forward far enough to be able to rotate 90 degrees
+                    // and still be able to place pixel on spike mark
                 }
             } // end move towards position based on prop
             if (eventManager.eventOccurred(timer.time(), 2)) {
                 if (propLocation == 0) {
-                    drivetrainCore.rotateByEncoder(-300);
+                    // Rotate to left
                 } else if (propLocation == 2) {
-                    drivetrainCore.rotateByEncoder(300);
+                    // Rotate to right
                 }
             } // end rotate based on prop
             if (eventManager.eventOccurred(timer.time(), 3)) {
                 if (propLocation != 1) {
-                    drivetrainCore.forwardByEncoder(300);
+                    // If the prop isn't in the middle, then that means that by now,
+                    // the robot is far enough forward to place the pixel on the spike mark.
                 }
             } // end move purple forward to meet tape
 
             if (eventManager.eventOccurred(timer.time(), 4)) {
                 if (propLocation == 1) {
-                    drivetrainCore.forwardByEncoder(-300);
+                    // If the prop is in the middle, move forward enough so that the robot can
+                    // move out of the way of the pixel on the spike mark.
                 } else {
-                    drivetrainCore.forwardByEncoder(-200);
+                    // Move forward. This will need to help align the robot with the correct side
+                    // on the backdrop.
                 }
             } // end move back to org pos
             if (eventManager.eventOccurred(timer.time(), 5)) {
                 if (propLocation == 0) {
-                    drivetrainCore.rotateByEncoder(700);
+                    // Rotate far enough to be able to move towards correct side of backdrop.
                 } else if (propLocation == 1) {
-                    drivetrainCore.rotateByEncoder(500);
+                    // Rotate far enough to be able to move toward correct side of backdrop
                 } else {
                     drivetrainCore.rotateByEncoder(300);
                 }
@@ -155,17 +159,18 @@ public class AutoRedSpikeBack extends LinearOpMode {
                     aprilTagAlignerPID.update(detection.ftcPose.x);
                     break;
                 }
-                // Strafe drivetrain based on AprilTag
+                // Move drivetrain based on AprilTag
                 drivetrainCore.setPowers(
                         drivetrainCore.translate(0, aprilTagAlignerPID.getPower()));
             } // end align with AprilTag
             if (eventManager.eventOccurred(timer.time(), 9)) {
                 aprilTagCore.closeVisionPortal();
-                drivetrainCore.forwardByEncoder(300);
-                armCore.setTargetPosition(-2400);
+                // Move forward to backdrop
+                // Move claw down
             } // end move forward to backdrop, set arm to drop pos
 
             if (eventManager.eventOccurred(timer.time(), 10)) {
+                // Open claw.
                 clawCore.open();
             } // end open claw
             if (eventManager.eventOccurred(timer.time(), 11)) {
