@@ -128,21 +128,21 @@ public class AutoRedSpikeBack extends LinearOpMode {
             } // end move back to org pos
             if (eventManager.eventOccurred(timer.time(), 5)) {
                 if (propLocation == 0) {
-                    // Rotate far enough to be able to move towards correct side of backdrop.
+                    // Rotate far enough to be able to move towards left side of backdrop
                 } else if (propLocation == 1) {
-                    // Rotate far enough to be able to move toward correct side of backdrop
+                    // Rotate far enough to be able to move toward middle of backdrop
                 } else {
-                    drivetrainCore.rotateByEncoder(300);
+                    // Rotate far enough to be able to move toward right side of backdrop
                 }
             } // end rotate back to align with AprilTag
             if (eventManager.eventOccurred(timer.time(), 6)) {
                 if (propLocation != 1) {
-                    drivetrainCore.strafeByEncoder(300);
+                    // If the pixel will go on either side of the backdrop, move to align with that selection.
                 }
             } // end strafe to center
 
             if (eventManager.eventOccurred(timer.time(), 7)) {
-                drivetrainCore.forwardByEncoder(500);
+                // Move close to enough backdrops for camera to register apriltag
             } // end move forward to see AprilTag
             if (eventManager.eventOccurred(timer.time(), 8)) {
                 aprilTagCore = new AprilTagCore(hardwareMap, 2);
@@ -160,8 +160,9 @@ public class AutoRedSpikeBack extends LinearOpMode {
                     break;
                 }
                 // Move drivetrain based on AprilTag
-                drivetrainCore.setPowers(
-                        drivetrainCore.translate(0, aprilTagAlignerPID.getPower()));
+                //
+                // IMPORTANT: This will potentially involve changing when certain actions happen after this script
+                //
             } // end align with AprilTag
             if (eventManager.eventOccurred(timer.time(), 9)) {
                 aprilTagCore.closeVisionPortal();
@@ -173,18 +174,23 @@ public class AutoRedSpikeBack extends LinearOpMode {
                 // Open claw.
                 clawCore.open();
             } // end open claw
+
+            // The robot will need to rotate 90 degrees towards whichever direction backstage is.
+            // After the (currently unwritten) script above is run, the robot's long side should be
+            // parallel to the backdrop.
+
             if (eventManager.eventOccurred(timer.time(), 11)) {
                 if (propLocation == 0) {
-                    drivetrainCore.strafeByEncoder(-400);
+                    // Move far enough that the robot can turn 90 degrees into the backdrop
                 } else if (propLocation == 1) {
-                    drivetrainCore.strafeByEncoder(-300);
+                    // Move far enough that the robot can turn 90 degrees into the backdrop
                 } else {
-                    drivetrainCore.strafeByEncoder(-200);
+                    // Move far enough that the robot can turn 90 degrees into the backdrop
                 }
-                armCore.setTargetPosition(-300);
-            } // end move arm to safe pos, strafe to edge based on propLocation
+                // Bring arm down
+            } // end move arm to safe pos, move to edge based on propLocation
             if (eventManager.eventOccurred(timer.time(), 12)) {
-                drivetrainCore.forwardByEncoder(200);
+                // Rotate 90 degrees into the backstage, move forward into backstage.
             } // end move into park
 
             addTelemetry(telemetry);
