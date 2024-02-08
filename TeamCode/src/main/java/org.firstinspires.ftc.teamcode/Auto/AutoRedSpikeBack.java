@@ -123,7 +123,8 @@ public class AutoRedSpikeBack extends LinearOpMode {
             if (eventManager.eventOccurred(timer.time(), 3)) {
                 if (propLocation != 1) {
                     // If the prop isn't in the middle, then that means that by now,
-                    // the robot is far enough forward to place the pixel on the spike mark.
+                    // the robot is far enough forward to place the pixel on the spike mark
+                    drivetrainCore.moveByEncoder(-90, -90);
                 }
             } // end move purple forward to meet tape
 
@@ -131,6 +132,7 @@ public class AutoRedSpikeBack extends LinearOpMode {
                 if (propLocation == 1) {
                     // If the prop is in the middle, move forward enough so that the robot can
                     // move out of the way of the pixel on the spike mark.
+                    drivetrainCore.moveByEncoder(-90, -90);
                 } else {
                     // Move forward. This will need to help align the robot with the correct side
                     // on the backdrop.
