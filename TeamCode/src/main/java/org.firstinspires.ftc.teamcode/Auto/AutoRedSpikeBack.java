@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Core.*;
+import org.firstinspires.ftc.teamcode.AutoCore.*;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.List;
@@ -26,7 +27,10 @@ public class AutoRedSpikeBack extends LinearOpMode {
     ClawCore clawCore;
     TensorFlowCore tensorFlowCore;
     AprilTagCore aprilTagCore;
+    VisionPortalCore visionPortalCore;
     // Other
+
+
     int propLocation; // 0-1-2 is left-middle-right
     PIDControllerSimple aprilTagAlignerPID;
 
@@ -55,10 +59,11 @@ public class AutoRedSpikeBack extends LinearOpMode {
         eventManager.addEvent(17.5); // move into park
 
         // Init core classes
+        visionPortalCore = new VisionPortalCore(hardwareMap);
         drivetrainCore = new DrivetrainCore(hardwareMap);
         armCore = new ArmCore(hardwareMap);
         clawCore = new ClawCore(hardwareMap);
-        tensorFlowCore = new TensorFlowCore(hardwareMap);
+        tensorFlowCore = new TensorFlowCore(hardwareMap, visionPortalCore.builder);
         // Init telemetry
         telemetry.addData("STATUS", "Initialized");
         telemetry.update();
@@ -93,12 +98,15 @@ public class AutoRedSpikeBack extends LinearOpMode {
                 }
                 propLocation = 0; // TODO debug forced propLocation
                 armCore.setTargetPosition(-2000);
-                tensorFlowCore.stopStreaming();
+                visionPortalCore.stopStreaming();
             } // end find prop, strafe to align with centre, move arm to safe
             if (eventManager.eventOccurred(timer.time(), 1)) {
                 if (propLocation == 1) {
                     // If prop in middle, drive straight forward to place pixel on spike mark.
+                    drivetrainCore.moveByEncoder(300, 300);
                 } else {
+                    drivetrainCore.moveByEncoder(200, 200);
+
                     // Otherwise, move forward far enough to be able to rotate 90 degrees
                     // and still be able to place pixel on spike mark
                 }
@@ -106,8 +114,10 @@ public class AutoRedSpikeBack extends LinearOpMode {
             if (eventManager.eventOccurred(timer.time(), 2)) {
                 if (propLocation == 0) {
                     // Rotate to left
+                    drivetrainCore.moveByEncoder(-90, 90);
                 } else if (propLocation == 2) {
                     // Rotate to right
+                    drivetrainCore.moveByEncoder(90, -90);
                 }
             } // end rotate based on prop
             if (eventManager.eventOccurred(timer.time(), 3)) {
@@ -145,7 +155,7 @@ public class AutoRedSpikeBack extends LinearOpMode {
                 // Move close to enough backdrops for camera to register apriltag
             } // end move forward to see AprilTag
             if (eventManager.eventOccurred(timer.time(), 8)) {
-                aprilTagCore = new AprilTagCore(hardwareMap, 2);
+                aprilTagCore = new AprilTagCore(hardwareMap, visionPortalCore.builder, 2);
                 aprilTagAlignerPID = new PIDControllerSimple("AprilTag aligner", 0, 0, 0, 0.3);
                 aprilTagAlignerPID.setTargetPosition(0); // goal of X = 0 with apriltag
             } // end align with AprilTag based on propLocation
@@ -165,7 +175,7 @@ public class AutoRedSpikeBack extends LinearOpMode {
                 //
             } // end align with AprilTag
             if (eventManager.eventOccurred(timer.time(), 9)) {
-                aprilTagCore.closeVisionPortal();
+                visionPortalCore.close();
                 // Move forward to backdrop
                 // Move claw down
             } // end move forward to backdrop, set arm to drop pos
