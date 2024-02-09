@@ -14,7 +14,7 @@ public class ArmCore {
 
     public ArmCore(HardwareMap hardwareMap) {
         armMotor = new PIDController(hardwareMap, "armMotor",
-                0.04, 0.001, 0.001, 0.5);
+                0.04, 0.001, 0.001, 0.4);
     }
 
     /** Sets a new target position for the motor. */
