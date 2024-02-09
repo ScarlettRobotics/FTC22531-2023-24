@@ -86,22 +86,22 @@ public abstract class SystemsManager extends OpMode {
                 // Move left/right wheels based on left/right stick movement
                 forward = gamepad1.left_stick_y;
                 if (gamepad1.dpad_up || gamepad1.dpad_down) { // slight forward/backwards, backwards prioritized
-                    forward = (gamepad1.dpad_down) ? .5 : -.5;
+                    forward = (gamepad1.dpad_down) ? 0.3 : -0.3;
                 }
                 turn = gamepad1.right_stick_x;
                 if (gamepad1.dpad_left || gamepad1.dpad_right) { // slight left/right, left prioritized
-                    turn = (gamepad1.dpad_left) ? -.5 : .5;
+                    turn = (gamepad1.dpad_left) ? -0.3 : 0.3;
                 }
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
                 forward = gamepad2.left_stick_y;
                 if (gamepad2.dpad_up || gamepad2.dpad_down) { // slight forward/backwards, backwards prioritized
-                    forward = (gamepad2.dpad_down) ? .5 : -.5;
+                    forward = (gamepad2.dpad_down) ? 0.3 : -0.3;
                 }
                 turn = gamepad2.right_stick_x;
                 if (gamepad2.dpad_left || gamepad2.dpad_right) { // slight left/right, left prioritized
-                    turn = (gamepad2.dpad_left) ? -.5 : .5;
+                    turn = (gamepad2.dpad_left) ? -0.3 : 0.3;
                 }
                 break;
             default:
