@@ -96,14 +96,15 @@ public class GeneralPropDetection extends LinearOpMode {
             } // end rotate to align with location 2
             if (propLocation == 0) { // Left
                 if (eventManager.eventOccurred(timer.time(), 2)) {
-                    drivetrainCore.forwardByEncoder(950);
+                    drivetrainCore.forwardByEncoder(500);
                     armCore.setTargetPosition(-2500);
                 } // end move forward based on prop location, arm safe
                 if (eventManager.eventOccurred(timer.time(), 3)) {
-                    drivetrainCore.rotateByEncoder(-600);
+                    drivetrainCore.rotateByEncoder(-350);
                     armCore.setTargetPosition(-3300);
                 } // end rotate to align with prop location, arm down
                 if (eventManager.eventOccurred(timer.time(), 5)) {
+                    drivetrainCore.forwardByEncoder(150);
                     clawCore.open();
                 } // end open claw
                 if (eventManager.eventOccurred(timer.time(), 6)) {
@@ -121,7 +122,7 @@ public class GeneralPropDetection extends LinearOpMode {
                     armCore.setTargetPosition(-3300);
                 } // end rotate to align with prop location, arm down
                 if (eventManager.eventOccurred(timer.time(), 4)) {
-                    drivetrainCore.forwardByEncoder(600);
+                    drivetrainCore.forwardByEncoder(500);
                 } // end move forward to prop
                 if (eventManager.eventOccurred(timer.time(), 5)) {
                     clawCore.open();
