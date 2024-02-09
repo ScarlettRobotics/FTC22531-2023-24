@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Core;
+package org.firstinspires.ftc.teamcode.AutoCore;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -45,7 +45,7 @@ public class PIDController {
     }
 
     /** Sets a new target position for the PIDController to move towards. */
-    protected void setTargetPosition(int encoder) {
+    public void setTargetPosition(int encoder) {
         this.targetPosition = encoder;
         // Reset PID variables
         pError = 0;
@@ -53,7 +53,7 @@ public class PIDController {
     }
 
     /** Sets a new target position based on the current position, moving by the input. */
-    protected void moveByEncoder(int encoder) {
+    public void moveByEncoder(int encoder) {
         this.targetPosition += encoder;
         // Reset PID variables
         pError = 0;
@@ -61,13 +61,13 @@ public class PIDController {
     }
 
     /** Returns targetPosition */
-    protected int getTargetPosition() {
+    public int getTargetPosition() {
         return targetPosition;
     }
 
     /** Moves the controller towards goalPosition encoder location.
      * If the PIDController has already reached goalPosition, no code is executed. */
-    protected void update() {
+    public void update() {
         currentPosition = motor.getCurrentPosition();
         // Exit if already at goalPosition
         if (targetPosition == currentPosition) {
@@ -103,12 +103,12 @@ public class PIDController {
 
     /** Overrides the set power from update() to the inputted power.
      * Run this code after update(), or overridePower() will do nothing. */
-    protected void overridePower(double power) {
+    public void overridePower(double power) {
         motor.setPower(power);
     }
 
     /** Telemetry */
-    protected void telemetry(Telemetry telemetry) {
+    public void telemetry(Telemetry telemetry) {
         telemetry.addData(motorName + " targetPosition", targetPosition);
         telemetry.addData(motorName + " currentPosition", motor.getCurrentPosition());
         telemetry.addData(motorName + " power", motor.getPower());

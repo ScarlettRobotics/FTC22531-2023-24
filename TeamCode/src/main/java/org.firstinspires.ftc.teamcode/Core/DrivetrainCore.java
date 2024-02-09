@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.Core;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.AutoCore.PIDController;
 
 /*** Manages the drivetrain of the robot. */
 public class DrivetrainCore {
