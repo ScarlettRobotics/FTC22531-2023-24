@@ -25,8 +25,8 @@ public class ClawCore {
 
     /** Closes the claw to a pre-set value. */
     public void close() {
-        leftClaw.setPosition(0.400);
-        rightClaw.setPosition(0.600);
+        leftClaw.setPosition(0.360);
+        rightClaw.setPosition(0.640);
     }
 
     /** Debug method to move claw position by input amount

@@ -16,9 +16,9 @@ public class DrivetrainCore {
     public DrivetrainCore(HardwareMap hardwareMap) {
         // Map DcMotor variables to hardwareMap
         leftMotor = new PIDController(hardwareMap, "leftMotor",
-                0.01, 0.0003, 0.0003, 0.1);
+                0.01, 0.0003, 0.0003, 0.4);
         rightMotor = new PIDController(hardwareMap, "rightMotor",
-                0.01, 0.0003, 0.0003, 0.1);
+                0.01, 0.0003, 0.0003, 0.4);
 
         // Set motor movement directions
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -29,6 +29,17 @@ public class DrivetrainCore {
     public void moveByEncoder(int leftEncoder, int rightEncoder) {
         leftMotor.moveByEncoder(leftEncoder);
         rightMotor.moveByEncoder(rightEncoder);
+    }
+
+    /** Moves the robot forwards by the inputted encoder value */
+    public void forwardByEncoder(int encoder) {
+        moveByEncoder(-encoder, -encoder);
+    }
+
+    /** Turns the robot by the inputted encoder value.
+     * Positive turns right. */
+    public void rotateByEncoder(int encoder) {
+        moveByEncoder(-encoder, encoder);
     }
 
     /** Updates the PIDController to move towards the provided goal position. */
