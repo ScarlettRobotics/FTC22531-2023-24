@@ -19,10 +19,6 @@ public abstract class SystemsManager extends OpMode {
     // FTC Dashboard telemetry variables
     FtcDashboard dashboard;
     Telemetry dashboardTelemetry;
-    // Variables used in methods
-    private int armPixelLevel;
-    private int[] pixelLevelEncoders = {-2800, -2670, -2620, -2520, -2400, -2270, -2100};
-    private boolean pGamepadDpadUp, pGamepadDpadDown;
 
     @Override
     public void init() {
@@ -39,10 +35,6 @@ public abstract class SystemsManager extends OpMode {
         // Initialize FTC Dashboard variables
         dashboard = FtcDashboard.getInstance();
         dashboardTelemetry = dashboard.getTelemetry();
-        // Initialize method variables
-        armPixelLevel = 0;
-        pGamepadDpadUp = false;
-        pGamepadDpadDown = false;
     }
 
     /** Receives a gamepad joystick input and returns zero if below a value. */
@@ -93,31 +85,31 @@ public abstract class SystemsManager extends OpMode {
             case 1:
                 // Move left/right wheels based on left/right stick movement
                 forward = gamepad1.left_stick_y;
-                if (gamepad1.a){
-                    forward = .15;
-                }
-                if(gamepad1.b){
-                    forward = -.15;
+                if (gamepad1.dpad_up || gamepad1.dpad_down) { // slight forward/backwards, backwards prioritized
+                    forward = (gamepad1.dpad_down) ? 0.3 : -0.3;
                 }
                 turn = gamepad1.right_stick_x;
+                if (gamepad1.dpad_left || gamepad1.dpad_right) { // slight left/right, left prioritized
+                    turn = (gamepad1.dpad_left) ? -0.3 : 0.3;
+                }
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
                 forward = gamepad2.left_stick_y;
-                if (gamepad2.a){
-                    forward = .15;
-                }
-                if(gamepad2.b){
-                    forward = -.15;
+                if (gamepad2.dpad_up || gamepad2.dpad_down) { // slight forward/backwards, backwards prioritized
+                    forward = (gamepad2.dpad_down) ? 0.3 : -0.3;
                 }
                 turn = gamepad2.right_stick_x;
+                if (gamepad2.dpad_left || gamepad2.dpad_right) { // slight left/right, left prioritized
+                    turn = (gamepad2.dpad_left) ? -0.3 : 0.3;
+                }
                 break;
             default:
                 forward = 0;
                 turn = 0;
         }
-        drivetrainCore.setMoveVelocity(noDrift(forward + turn, 0.05),
-                noDrift(forward - turn, 0.05));
+        drivetrainCore.setMoveVelocity(noDrift(forward - turn, 0.05),
+                noDrift(forward + turn, 0.05));
     }
 
     /** Updates arm movement.
@@ -134,12 +126,12 @@ public abstract class SystemsManager extends OpMode {
             case 1:
                 // Move left/right wheels based on left/right stick movement
                 power = gamepad1.left_trigger - gamepad1.right_trigger;
-                lifting = gamepad1.dpad_up;
+                lifting = gamepad1.right_stick_button;
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
                 power = gamepad2.left_trigger - gamepad2.right_trigger;
-                lifting = gamepad2.dpad_up;
+                lifting = gamepad2.right_stick_button;
                 break;
             default:
                 power = 0;
@@ -181,10 +173,10 @@ public abstract class SystemsManager extends OpMode {
         boolean launching = false;
         switch (controllerNum) {
             case 1:
-                launching = gamepad1.dpad_up;
+                launching = gamepad1.left_stick_button;
                 break;
             case 2:
-                launching = gamepad2.dpad_up;
+                launching = gamepad2.left_stick_button;
                 break;
         }
         if (launching) droneLauncherCore.launch();

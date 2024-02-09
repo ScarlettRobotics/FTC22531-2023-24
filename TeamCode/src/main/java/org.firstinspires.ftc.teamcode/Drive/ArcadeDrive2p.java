@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Drive;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Core.SystemsManager;
 
-@TeleOp(name = "ArcadeDrive2p", group = "arcade")
+@TeleOp(name = "ArcadeDrive2p", group = " arcade")
 public class ArcadeDrive2p extends SystemsManager {
     @Override
     public void loop() {
