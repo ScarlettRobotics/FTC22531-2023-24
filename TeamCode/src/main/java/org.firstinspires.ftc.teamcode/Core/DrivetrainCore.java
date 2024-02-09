@@ -21,7 +21,7 @@ public class DrivetrainCore {
                 0.01, 0.0003, 0.0003, 0.1);
 
         // Set motor movement directions
-        leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
@@ -29,15 +29,6 @@ public class DrivetrainCore {
     public void moveByEncoder(int leftEncoder, int rightEncoder) {
         leftMotor.moveByEncoder(leftEncoder);
         rightMotor.moveByEncoder(rightEncoder);
-    }
-
-    /** Returns left targetPosition */
-    protected int getTargetPositionLeft() {
-        return leftMotor.getTargetPosition();
-    }
-    /** Returns right targetPosition */
-    protected int getTargetPositionRight() {
-        return rightMotor.getTargetPosition();
     }
 
     /** Updates the PIDController to move towards the provided goal position. */
@@ -52,17 +43,16 @@ public class DrivetrainCore {
      * @param rightVelocity - power sent to the right motor
      */
     public void setMoveVelocity(double leftVelocity, double rightVelocity) {
-        leftMotor.overridePower(changePower(leftVelocity));
-        rightMotor.overridePower(changePower(rightVelocity));
+        leftMotor.overridePower(constrainPower(leftVelocity));
+        rightMotor.overridePower(constrainPower(rightVelocity));
     }
 
     /**
-     * Squares the velocity in the given direction
-     * @param velocity
+     * @param velocity current power of motor
      * @return - return the squared velocity
      */
-    private double changePower(double velocity) {
-        return velocity * velocity * velocity;
+    private double constrainPower(double velocity) {
+        return Math.min(Math.max(velocity, -0.8), 0.8);
     }
 
     /** Telemetry in contained in each class for ease of access. */

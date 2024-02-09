@@ -86,30 +86,30 @@ public abstract class SystemsManager extends OpMode {
                 // Move left/right wheels based on left/right stick movement
                 forward = gamepad1.left_stick_y;
                 if (gamepad1.dpad_up || gamepad1.dpad_down) { // slight forward/backwards, backwards prioritized
-                    forward = (gamepad1.dpad_down) ? -.15 : .15;
+                    forward = (gamepad1.dpad_down) ? .5 : -.5;
                 }
                 turn = gamepad1.right_stick_x;
-                if (gamepad1.dpad_left || gamepad1.dpad_right) {
-                    turn = (gamepad1.dpad_left) ? -.15 : .15;
+                if (gamepad1.dpad_left || gamepad1.dpad_right) { // slight left/right, left prioritized
+                    turn = (gamepad1.dpad_left) ? -.5 : .5;
                 }
                 break;
             case 2:
                 // Move left/right wheels based on left/right stick movement
                 forward = gamepad2.left_stick_y;
                 if (gamepad2.dpad_up || gamepad2.dpad_down) { // slight forward/backwards, backwards prioritized
-                    forward = (gamepad2.dpad_down) ? -.15 : .15;
+                    forward = (gamepad2.dpad_down) ? .5 : -.5;
                 }
                 turn = gamepad2.right_stick_x;
-                if (gamepad2.dpad_left || gamepad2.dpad_right) {
-                    turn = (gamepad2.dpad_left) ? -.15 : .15;
+                if (gamepad2.dpad_left || gamepad2.dpad_right) { // slight left/right, left prioritized
+                    turn = (gamepad2.dpad_left) ? -.5 : .5;
                 }
                 break;
             default:
                 forward = 0;
                 turn = 0;
         }
-        drivetrainCore.setMoveVelocity(noDrift(forward + turn, 0.05),
-                noDrift(forward - turn, 0.05));
+        drivetrainCore.setMoveVelocity(noDrift(forward - turn, 0.05),
+                noDrift(forward + turn, 0.05));
     }
 
     /** Updates arm movement.
