@@ -42,7 +42,7 @@ import org.firstinspires.ftc.teamcode.AutoCore.VisionPortalCore;
  * Originally in FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples.
  * Modified to be usable in an OOP structure.
  */
-@TeleOp(name = "TensorFlowTest", group = "concepts-vision")
+@TeleOp(name = "TensorFlowTest", group = "concept-vision")
 public class TensorFlowTest extends LinearOpMode {
     // FTC Dashboard
     FtcDashboard dashboard;
