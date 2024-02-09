@@ -29,7 +29,6 @@ public class GeneralPropDetection extends LinearOpMode {
     TensorFlowCore tensorFlowCore;
     // Other
     int propLocation; // 0-1-2 is left-middle-right
-    PIDControllerSimple aprilTagAlignerPID;
 
     private void initialize() {
         // Init dashboard
@@ -85,7 +84,7 @@ public class GeneralPropDetection extends LinearOpMode {
                     propLocation = 0;
                 }
                 visionPortalCore.stopStreaming();
-                drivetrainCore.strafeByEncoder(-100);
+                drivetrainCore.rotateByEncoder(-100);
             } // end find prop, strafe to align with centre, move arm to safe
             if (propLocation == 0) { // Left
                 if (eventManager.eventOccurred(timer.time(), 1)) {
