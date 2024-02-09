@@ -29,7 +29,7 @@ public class PIDController {
      * @param Ki Integral coefficient (I in PID). Input 0-1
      * @param Kd Derivative coefficient (D in PID). Input 0-1
      * @param powerCap Maximum power that motor can run at. Input 0-1 */
-    PIDController(HardwareMap hardwareMap, String motorName, double Kp, double Ki, double Kd, double powerCap) {
+    public PIDController(HardwareMap hardwareMap, String motorName, double Kp, double Ki, double Kd, double powerCap) {
         this.motorName = motorName;
         // Initialize PID variables
         timer = new ElapsedTime();
