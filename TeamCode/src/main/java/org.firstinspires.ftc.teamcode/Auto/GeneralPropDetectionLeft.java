@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.Core.DrivetrainCore;
 
 /** Used if on the close side of movement. Place where wheels touch right teeth.
  * Places yellow pixel based on prop position, then places purple pixel on backdrop based on prop position. */
-@Autonomous(name = "GeneralPropDetection", group = "general")
-public class GeneralPropDetection extends LinearOpMode {
+@Autonomous(name = "GeneralPropDetectionLeft", group = "general")
+public class GeneralPropDetectionLeft extends LinearOpMode {
     // FTC Dashboard
     private FtcDashboard dashboard;
     private Telemetry dashboardTelemetry;
