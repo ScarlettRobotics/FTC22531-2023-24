@@ -107,8 +107,8 @@ public class GeneralPropDetection extends LinearOpMode {
                     drivetrainCore.forwardByEncoder(-200);
                     armCore.setTargetPosition(-3300);
                 } // end if propLocation == 0, move back, arm down
-                if (eventManager.eventOccurred(timer.time(), 4)) {
-                    drivetrainCore.forwardByEncoder(200);
+                if (eventManager.eventOccurred(timer.time(), 5)) {
+                    drivetrainCore.forwardByEncoder(300);
                 } // end move forward to prop
                 if (eventManager.eventOccurred(timer.time(), 6)) {
                     drivetrainCore.forwardByEncoder(150);
